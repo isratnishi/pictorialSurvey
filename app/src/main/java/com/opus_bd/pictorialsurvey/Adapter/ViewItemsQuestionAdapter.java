@@ -1,7 +1,6 @@
 package com.opus_bd.pictorialsurvey.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,18 +16,12 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.stream.UrlLoader;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.opus_bd.pictorialsurvey.Activity.SurveyActivity;
-import com.opus_bd.pictorialsurvey.Model.Constant;
 import com.opus_bd.pictorialsurvey.Model.Question;
-import com.opus_bd.pictorialsurvey.Model.Survey;
 import com.opus_bd.pictorialsurvey.R;
 
-import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 
 public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQuestionAdapter.ItemViewHolder> {
@@ -66,6 +59,7 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
                 holder.imageanswer1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        a1++;
                         holder.Counter1.setText(String.valueOf(a1));
                     }
                 });
@@ -145,4 +139,6 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
 
         }
     }
+
+
 }

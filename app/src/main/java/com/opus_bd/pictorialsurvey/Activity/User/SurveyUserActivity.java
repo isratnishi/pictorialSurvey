@@ -1,9 +1,8 @@
-package com.opus_bd.pictorialsurvey.Activity;
+package com.opus_bd.pictorialsurvey.Activity.User;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +18,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.opus_bd.pictorialsurvey.Adapter.ViewItemsAdapter;
+import com.opus_bd.pictorialsurvey.Activity.Admin.MainActivity;
+import com.opus_bd.pictorialsurvey.Activity.Admin.QuestionActivity;
+import com.opus_bd.pictorialsurvey.Activity.Admin.SurveyActivity;
 import com.opus_bd.pictorialsurvey.Adapter.ViewItemsQuestionAdapter;
 import com.opus_bd.pictorialsurvey.Model.Constant;
 import com.opus_bd.pictorialsurvey.Model.Question;
@@ -28,7 +29,7 @@ import com.opus_bd.pictorialsurvey.R;
 
 import java.util.ArrayList;
 
-public class SurveyActivity extends AppCompatActivity {
+public class SurveyUserActivity extends AppCompatActivity {
     TextView tvName, tvDescription;
     Button btnAddQuestion;
     Survey survey;
@@ -44,6 +45,7 @@ public class SurveyActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tvName);
         tvDescription = findViewById(R.id.tvDescription);
         btnAddQuestion = findViewById(R.id.btnAddQuestion);
+        btnAddQuestion.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.Recyclerview);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -73,7 +75,7 @@ public class SurveyActivity extends AppCompatActivity {
 
     public void showDialog() {
         // Create custom dialog object
-        final Dialog dialog = new Dialog(SurveyActivity.this);
+        final Dialog dialog = new Dialog(SurveyUserActivity.this);
         // Include dialog.xml file
         dialog.setContentView(R.layout.content_main);
         // Set dialog title
@@ -87,7 +89,7 @@ public class SurveyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (etUserId.getText().toString().equals("ADMIN") && etPassword.getText().toString().equals("123456")) {
-                    Intent intent = new Intent(SurveyActivity.this, QuestionActivity.class);
+                    Intent intent = new Intent(SurveyUserActivity.this, QuestionActivity.class);
                     intent.putExtra(Constant.EXTRA_ITEM, survey);
 
                     startActivity(intent);
@@ -141,12 +143,18 @@ public class SurveyActivity extends AppCompatActivity {
     }
 
     private void initializeVariables() {
-        viewItemsAdapter = new ViewItemsQuestionAdapter(models, SurveyActivity.this);
+        viewItemsAdapter = new ViewItemsQuestionAdapter(models, SurveyUserActivity.this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setStackFromEnd(true);
         mLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(viewItemsAdapter);
     }
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SurveyUserActivity.this, UserMainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        super.onBackPressed();
+    }
    }

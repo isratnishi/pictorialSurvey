@@ -1,4 +1,4 @@
-package com.opus_bd.pictorialsurvey.Activity;
+package com.opus_bd.pictorialsurvey.Activity.Admin;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.opus_bd.pictorialsurvey.Activity.LoginActivity;
 import com.opus_bd.pictorialsurvey.Adapter.ViewItemsAdapter;
 import com.opus_bd.pictorialsurvey.Model.Constant;
 import com.opus_bd.pictorialsurvey.Model.Survey;
@@ -115,8 +115,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void FabOnclick(View view) {
-        showDialog();
+        //showDialog();
+
+        Intent intent = new Intent(MainActivity.this, AddNewSurveyActivity.class);
+        startActivity(intent);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        super.onBackPressed();
+    }
 }

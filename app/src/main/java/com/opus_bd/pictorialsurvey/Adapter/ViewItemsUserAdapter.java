@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.opus_bd.pictorialsurvey.Activity.Admin.SurveyActivity;
+import com.opus_bd.pictorialsurvey.Activity.User.SurveyUserActivity;
 import com.opus_bd.pictorialsurvey.Model.Constant;
 import com.opus_bd.pictorialsurvey.Model.Survey;
 import com.opus_bd.pictorialsurvey.R;
@@ -21,13 +22,13 @@ import com.opus_bd.pictorialsurvey.R;
 import java.util.HashMap;
 import java.util.List;
 
-public class ViewItemsAdapter extends RecyclerView.Adapter<ViewItemsAdapter.ItemViewHolder> {
+public class ViewItemsUserAdapter extends RecyclerView.Adapter<ViewItemsUserAdapter.ItemViewHolder> {
     private List<Survey> itemList;
     private Context context;
     private String tableNumber;
     private HashMap<String, Survey> mData;
 
-    public ViewItemsAdapter(List<Survey> itemList, Context context) {
+    public ViewItemsUserAdapter(List<Survey> itemList, Context context) {
         this.itemList = itemList;
         this.context = context;
     }
@@ -35,14 +36,14 @@ public class ViewItemsAdapter extends RecyclerView.Adapter<ViewItemsAdapter.Item
 
     @NonNull
     @Override
-    public ViewItemsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewItemsUserAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_row, parent, false);
-        return new ViewItemsAdapter.ItemViewHolder(itemView);
+        return new ViewItemsUserAdapter.ItemViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewItemsAdapter.ItemViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewItemsUserAdapter.ItemViewHolder holder, final int position) {
         final Survey survey = itemList.get(position);
         holder.question.setText(itemList.get(position).getSurveyName());
         holder.answer1.setText(itemList.get(position).getDescription());
@@ -50,7 +51,7 @@ public class ViewItemsAdapter extends RecyclerView.Adapter<ViewItemsAdapter.Item
         holder.rootLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SurveyActivity.class);
+                Intent intent = new Intent(context, SurveyUserActivity.class);
                 intent.putExtra(Constant.EXTRA_ITEM, survey);
 
 

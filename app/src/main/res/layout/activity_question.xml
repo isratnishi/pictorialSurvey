@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_margin="16sp"
     android:orientation="vertical"
-    tools:context=".Activity.QuestionActivity">
+    tools:context=".Activity.Admin.QuestionActivity">
 
     <TextView
         android:id="@+id/tvSetAQuestion"
