@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PictorialSurvey</string>
+
+    <string-array name="type">
+        <item>Text</item>
+        <item>Picture</item>
+    </string-array>
+</resources>
