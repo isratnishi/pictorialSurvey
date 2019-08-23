@@ -47,7 +47,10 @@ import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.opus_bd.pictorialsurvey.Activity.LoginActivity;
 import com.opus_bd.pictorialsurvey.Model.Constant;
+import com.opus_bd.pictorialsurvey.Model.Option1;
+import com.opus_bd.pictorialsurvey.Model.Option2;
 import com.opus_bd.pictorialsurvey.Model.Question;
+import com.opus_bd.pictorialsurvey.Model.ServayQuestionModel;
 import com.opus_bd.pictorialsurvey.Model.Survey;
 import com.opus_bd.pictorialsurvey.R;
 
@@ -63,6 +66,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static android.view.View.VISIBLE;
+import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY_ID;
 
 public class QuestionActivity extends AppCompatActivity {
 
@@ -113,6 +117,7 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         /*  ActivityQusetionBinding binding = DataBindingUtil. */
+        //CURRENTLY_SHOWING_SURVEY_ID
         setContentView(R.layout.activity_question);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -157,9 +162,26 @@ public class QuestionActivity extends AppCompatActivity {
 
     public void Submit(View view) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.QUESTION).child(survey.getSurveyName());
+        //final DatabaseReference databaseReference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.QUESTION).child(survey.getSurveyName());
         //String key = databaseReference.push().getKey();
+        DatabaseReference databaseReference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.SURVEY_LIST).child(CURRENTLY_SHOWING_SURVEY_ID).child("options");
+        String key=databaseReference.push().getKey();
+        ServayQuestionModel servayQuestionModel =new ServayQuestionModel();
+        servayQuestionModel.setQuestion(etSetQuestion.getText().toString().trim());
+        String option_1_key= databaseReference.child(key).push().getKey();
+        servayQuestionModel.setOption1(new Option1(option_1_key,etSetQuestionAnswer1.getText().toString().trim()));
 
+        String option_2_key= databaseReference.child(key).push().getKey();
+        servayQuestionModel.setOption2(new Option2(option_2_key,etSetQuestionAnswer2.getText().toString().trim()));
+        servayQuestionModel.setOptionType("TEXT");
+        databaseReference.child(key).setValue(servayQuestionModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(QuestionActivity.this, "success", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*
         Map<String, String> firebaseDataMap = new HashMap<>();
         firebaseDataMap.put(Constant.SETQUESTION, etSetQuestion.getText().toString());
         firebaseDataMap.put(Constant.ANSWER1, etSetQuestionAnswer1.getText().toString());
@@ -230,6 +252,8 @@ public class QuestionActivity extends AppCompatActivity {
       intent.putExtra(Constant.EXTRA_ITEM, survey);
       //  intent.putExtra(Constant.EXTRA_ITEM1, survey1);*/
         startActivity(intent);
+
+
     }
 
     public void SubmittoDb(String a, String b) {

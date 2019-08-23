@@ -2,6 +2,7 @@ package com.opus_bd.pictorialsurvey.Model;
 
 public class Constant {
     // Schedule
+    public static final String SURVEY_ID = "survey_id";
     public static final String SURVEY = "survey";
     public static final String SURVEY_LIST = "surveyList";
     public static final String QUESTION = "question";

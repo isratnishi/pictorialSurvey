@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,12 +20,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.opus_bd.pictorialsurvey.Adapter.ViewItemsQuestionAdapter;
+import com.opus_bd.pictorialsurvey.Adapter.ViewItemsQuestionAdapterAdmin;
 import com.opus_bd.pictorialsurvey.Model.Constant;
 import com.opus_bd.pictorialsurvey.Model.Question;
+import com.opus_bd.pictorialsurvey.Model.ServayQuestionModel;
 import com.opus_bd.pictorialsurvey.Model.Survey;
 import com.opus_bd.pictorialsurvey.R;
 
 import java.util.ArrayList;
+import java.util.Map;
+
+import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY;
+import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY_ID;
 
 public class SurveyActivity extends AppCompatActivity {
     TextView tvName, tvDescription;
@@ -32,8 +39,8 @@ public class SurveyActivity extends AppCompatActivity {
     Survey survey;
 
     private RecyclerView recyclerView;
-    ViewItemsQuestionAdapter viewItemsAdapter;
-    ArrayList<Question> models = new ArrayList<>();
+    ViewItemsQuestionAdapterAdmin viewItemsAdapter;
+    ArrayList<ServayQuestionModel> models = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +55,23 @@ public class SurveyActivity extends AppCompatActivity {
             survey = (Survey) getIntent().getSerializableExtra(Constant.EXTRA_ITEM);
         }
         try {
-            if (survey != null) {
-                tvName.setText(survey.getSurveyName());
+            if (true) {
+                tvName.setText(CURRENTLY_SHOWING_SURVEY.getSurveyName());
             }
-            if (survey != null) {
-                tvDescription.setText(survey.getDescription());
+            if (true) {
+                tvDescription.setText(CURRENTLY_SHOWING_SURVEY.getDescription());
             }
         } catch (Exception e) {
         }
 
-        database();
+        try {
+            //Toast.makeText(this, CURRENTLY_SHOWING_SURVEY_ID, Toast.LENGTH_LONG).show();
+            database();
+
+        } catch (Exception e) {
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+        }
+
         initializeVariables();
         btnAddQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,25 +128,37 @@ public class SurveyActivity extends AppCompatActivity {
     }
 
     public void database() {
+        // Toast.makeText(this, "method worked", Toast.LENGTH_SHORT).show();
+
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.QUESTION).child(survey.getSurveyName());
+        final DatabaseReference reference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.SURVEY_LIST).child(CURRENTLY_SHOWING_SURVEY_ID).child("options");
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Toast.makeText(SurveyActivity.this, dataSnapshot.toString(), Toast.LENGTH_LONG).show();
+
+
                 models.clear();
+                Toast.makeText(SurveyActivity.this, "data downloaded", Toast.LENGTH_SHORT).show();
 
-                for (DataSnapshot tempDataSnapShot : dataSnapshot.getChildren()) {
-                    Question foodItem = tempDataSnapShot.getValue(Question.class);
+                try {
+                    for (DataSnapshot tempDataSnapShot : dataSnapshot.getChildren()) {
+                        ServayQuestionModel foodItem = tempDataSnapShot.getValue(ServayQuestionModel.class);
 
-                    if (foodItem != null) {
-                        models.add(foodItem);
+                        if (foodItem != null) {
+                            models.add(foodItem);
 
 
+                        }
                     }
+
+                    viewItemsAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    Toast.makeText(SurveyActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 }
 
-                viewItemsAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -147,7 +173,7 @@ public class SurveyActivity extends AppCompatActivity {
     }
 
     private void initializeVariables() {
-        viewItemsAdapter = new ViewItemsQuestionAdapter(models, SurveyActivity.this);
+        viewItemsAdapter = new ViewItemsQuestionAdapterAdmin(models, SurveyActivity.this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setStackFromEnd(true);
         mLayoutManager.setReverseLayout(true);
@@ -161,5 +187,9 @@ public class SurveyActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         super.onBackPressed();
+    }
+
+    public void voteSubmit(View view) {
+
     }
 }

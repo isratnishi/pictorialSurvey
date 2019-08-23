@@ -22,6 +22,9 @@ import com.opus_bd.pictorialsurvey.R;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY;
+import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY_ID;
+
 public class ViewItemsUserAdapter extends RecyclerView.Adapter<ViewItemsUserAdapter.ItemViewHolder> {
     private List<Survey> itemList;
     private Context context;
@@ -51,6 +54,9 @@ public class ViewItemsUserAdapter extends RecyclerView.Adapter<ViewItemsUserAdap
         holder.rootLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CURRENTLY_SHOWING_SURVEY=survey;
+                CURRENTLY_SHOWING_SURVEY_ID=survey.getKey();
+
                 Intent intent = new Intent(context, SurveyUserActivity.class);
                 intent.putExtra(Constant.EXTRA_ITEM, survey);
 
@@ -58,6 +64,7 @@ public class ViewItemsUserAdapter extends RecyclerView.Adapter<ViewItemsUserAdap
                 context.startActivity(intent);
             }
         });
+
 
     /*    holder.priceTextView.setText(itemList.get(position).getPrice() + " Tk.");
         holder.itemDescriptionTextView.setText(itemList.get(position).getDescription());

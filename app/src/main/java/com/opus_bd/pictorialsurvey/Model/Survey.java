@@ -6,7 +6,15 @@ public class Survey implements Serializable {
     private String surveyName;
     private String description;
     private Question question;
+    private String  key;
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public Survey() {
     }

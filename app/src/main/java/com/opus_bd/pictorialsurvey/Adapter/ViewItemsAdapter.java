@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -20,6 +21,9 @@ import com.opus_bd.pictorialsurvey.R;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY;
+import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY_ID;
 
 public class ViewItemsAdapter extends RecyclerView.Adapter<ViewItemsAdapter.ItemViewHolder> {
     private List<Survey> itemList;
@@ -51,10 +55,24 @@ public class ViewItemsAdapter extends RecyclerView.Adapter<ViewItemsAdapter.Item
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SurveyActivity.class);
-                intent.putExtra(Constant.EXTRA_ITEM, survey);
+                // intent.putExtra(Constant.EXTRA_ITEM, survey);
+                // intent.putExtra(Constant.SURVEY_ID, survey.getKey());
+                if (survey == null) {
+                    Toast.makeText(context, "survey is null", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    if (survey.getKey() != null) {
+                        CURRENTLY_SHOWING_SURVEY_ID = survey.getKey();
+                        CURRENTLY_SHOWING_SURVEY=survey;
+
+                        context.startActivity(intent);
+                    } else {
+                        Toast.makeText(context, "key is null", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
 
 
-                context.startActivity(intent);
             }
         });
 

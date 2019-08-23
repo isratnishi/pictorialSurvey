@@ -40,6 +40,7 @@ public class AddNewSurveyActivity extends AppCompatActivity {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.SURVEY_LIST);
         //String key = databaseReference.push().getKey();
+        String key = "survey_key"+System.currentTimeMillis();
 
         Map<String, String> firebaseDataMap = new HashMap<>();
         firebaseDataMap.put(Constant.SETSURVEY, etSurveyName.getText().toString());
@@ -47,9 +48,11 @@ public class AddNewSurveyActivity extends AppCompatActivity {
         Survey survey = new Survey();
         survey.setSurveyName(etSurveyName.getText().toString());
         survey.setDescription(etSurveyDescription.getText().toString());
-        databaseReference.push().setValue(survey);
+        survey.setKey(key);
+        databaseReference.child(key).setValue(survey);
 
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("Survey_ID",key);
         startActivity(intent);
     }
 }

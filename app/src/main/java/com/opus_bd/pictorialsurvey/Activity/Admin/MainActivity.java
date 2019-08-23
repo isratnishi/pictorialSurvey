@@ -24,6 +24,7 @@ import com.opus_bd.pictorialsurvey.Model.Survey;
 import com.opus_bd.pictorialsurvey.R;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
@@ -52,10 +53,12 @@ public class MainActivity extends AppCompatActivity {
 
                 for (DataSnapshot tempDataSnapShot : dataSnapshot.getChildren()) {
                     Survey foodItem = tempDataSnapShot.getValue(Survey.class);
+
                     if (foodItem != null) {
                         models.add(foodItem);
 
                     }
+
                 }
 
                 viewItemsAdapter.notifyDataSetChanged();
