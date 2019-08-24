@@ -31,7 +31,7 @@
             android:orientation="horizontal">
             <RadioGroup
                 android:id="@+id/radioQuestionGroup"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -76,34 +76,22 @@
                 android:scaleType="centerCrop" />
         </LinearLayout>
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:visibility="gone"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:errorEnabled="true">
 
-            <TextView
-                android:id="@+id/Counter1"
-                android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRemarks"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="start"
-                android:layout_margin="10dp"
-                android:text="0"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:inputType="text"
+                android:hint="Remaks" />
 
-            <TextView
-                android:id="@+id/Counter2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="start"
-                android:layout_margin="10dp"
-                android:text="0"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

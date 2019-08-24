@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -32,7 +33,6 @@ import static com.opus_bd.pictorialsurvey.Activity.User.SurveyUserActivity.votin
 
 public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQuestionAdapter.ItemViewHolder> {
     private Context context;
-    private int a1 = 0, a2 = 0, a3 = 0, a4 = 0;
 
     public ViewItemsQuestionAdapter(Context context) {
         this.context = context;
@@ -58,26 +58,19 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
             holder.imageanswer1.setVisibility(View.GONE);
             holder.imageanswer2.setVisibility(View.GONE);
         }
-
-
-        holder.answer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                a3++;
-                holder.Counter1.setText(String.valueOf(a3));
-            }
-        });
         holder.radioQuestionGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 Toast.makeText(context, "vote result changed", Toast.LENGTH_SHORT).show();
                 switch (radioGroup.getCheckedRadioButtonId()) {
                     case R.id.answer1: {
-                        question.setSelectedOptionID("option1");
+                        question.setSelectedOptionID(question.getOptionOneID());
+                        question.setNonSelectedID(question.getOptionTwoID());
                         break;
                     }
                     case R.id.answer2: {
-                        question.setSelectedOptionID("option2");
+                        question.setSelectedOptionID(question.getOptionTwoID());
+                        question.setNonSelectedID(question.getOptionOneID());
 
                         break;
                     }
@@ -86,21 +79,12 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
         });
 
 
-        holder.answer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                a4++;
-                holder.Counter2.setText(String.valueOf(a4));
-            }
-        });
-        Log.d("tag", " key " + votingModels.get(position));
-
-        holder.question.setText(question.getQuestuionValue());
+        holder.question.setText("Q. "+question.getQuestuionValue());
 
         holder.answer2.setText(votingModels.get(position).getOptionTwo());
         holder.answer1.setText(votingModels.get(position).getOptionOne());
-        holder.question.setText(votingModels.get(position).getQuestuionValue());
-
+        holder.question.setText("Q. "+votingModels.get(position).getQuestuionValue());
+        Log.d("print","yes");
     }
 
     @Override
@@ -110,7 +94,7 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView question;
-        TextView Counter1, Counter2;
+        EditText etRemarks;
         RadioButton answer1, answer2;
         RadioGroup radioQuestionGroup;
         ImageView imageanswer1, imageanswer2;
@@ -120,13 +104,13 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
         public ItemViewHolder(View view) {
             super(view);
             question = view.findViewById(R.id.teamone);
+            etRemarks = view.findViewById(R.id.etRemarks);
             answer1 = view.findViewById(R.id.answer1);
             answer2 = view.findViewById(R.id.answer2);
             imageanswer1 = view.findViewById(R.id.imageanswer1);
             radioQuestionGroup = view.findViewById(R.id.radioQuestionGroup);
             imageanswer2 = view.findViewById(R.id.imageanswer2);
-            Counter1 = view.findViewById(R.id.Counter1);
-            Counter2 = view.findViewById(R.id.Counter2);
+
             rootLayout = view.findViewById(R.id.rootLayout);
             llradioAnswer = view.findViewById(R.id.llradioAnswer);
             llImageAnswer = view.findViewById(R.id.llImageAnswer);

@@ -23,7 +23,7 @@ import java.util.List;
 public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItemsQuestionAdapterAdmin.ItemViewHolder> {
     private List<ServayQuestionModel> itemList;
     private Context context;
-    private int a1 = 0, a2 = 0, a3 = 0, a4 = 0;
+
 
     public ViewItemsQuestionAdapterAdmin(List<ServayQuestionModel> itemList, Context context) {
         this.itemList = itemList;
@@ -53,30 +53,11 @@ public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItem
 
 
 
-        holder.answer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                a3++;
-                holder.Counter1.setText(String.valueOf(a3));
-            }
-        });
-
-
-
-        holder.answer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                a4++;
-                holder.Counter2.setText(String.valueOf(a4));
-            }
-        });
-        Log.d("tag", " key " + itemList.get(position));
-
-    holder.question.setText(question.getQuestion());
+    holder.question.setText("Q. "+question.getQuestion());
 
         holder.answer2.setText(itemList.get(position).getOption2().getValue());
         holder.answer1.setText(itemList.get(position).getOption1().getValue());
-        holder.question.setText(itemList.get(position).getQuestion());
+        holder.question.setText("Q. "+itemList.get(position).getQuestion());
 
     }
 
@@ -87,7 +68,6 @@ public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItem
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView question;
-        TextView Counter1, Counter2;
         RadioButton answer1, answer2;
         ImageView imageanswer1, imageanswer2;
         CardView rootLayout;
@@ -100,8 +80,6 @@ public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItem
             answer2 = view.findViewById(R.id.answer2);
             imageanswer1 = view.findViewById(R.id.imageanswer1);
             imageanswer2 = view.findViewById(R.id.imageanswer2);
-            Counter1 = view.findViewById(R.id.Counter1);
-            Counter2 = view.findViewById(R.id.Counter2);
             rootLayout = view.findViewById(R.id.rootLayout);
             llradioAnswer = view.findViewById(R.id.llradioAnswer);
             llImageAnswer = view.findViewById(R.id.llImageAnswer);

@@ -35,7 +35,7 @@ import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SUR
 
 public class SurveyActivity extends AppCompatActivity {
     TextView tvName, tvDescription;
-    Button btnAddQuestion;
+    Button btnAddQuestion,btnsub;
     Survey survey;
 
     private RecyclerView recyclerView;
@@ -49,6 +49,8 @@ public class SurveyActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tvName);
         tvDescription = findViewById(R.id.tvDescription);
         btnAddQuestion = findViewById(R.id.btnAddQuestion);
+        btnsub = findViewById(R.id.btnsub);
+        btnsub.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.Recyclerview);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -86,6 +88,9 @@ public class SurveyActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public  void  openVoteResultActivity (View view){
+        startActivity(new Intent(this,VoteResult.class));
     }
 
     public void showDialog() {

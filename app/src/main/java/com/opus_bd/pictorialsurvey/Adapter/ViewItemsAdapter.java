@@ -65,7 +65,8 @@ public class ViewItemsAdapter extends RecyclerView.Adapter<ViewItemsAdapter.Item
                         CURRENTLY_SHOWING_SURVEY_ID = survey.getKey();
                         CURRENTLY_SHOWING_SURVEY=survey;
 
-                        context.startActivity(intent);
+                       context.startActivity(intent);
+                       // Toast.makeText(context, "hey ", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(context, "key is null", Toast.LENGTH_SHORT).show();
 

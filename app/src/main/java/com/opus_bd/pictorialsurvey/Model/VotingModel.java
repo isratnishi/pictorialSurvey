@@ -9,8 +9,19 @@ public class VotingModel {
     String QuestuionID;
     String QuestuionValue;
     String OptionType;
+    String optionOneID;
+    String optionTwoID;
+    String nonSelectedID;
+    public String getRemarks() {
+        return remarks;
+    }
 
-    public VotingModel(String serVay_ID, String selectedOptionValue, String selectedOptionID, String optionOne, String optionTwo, String questuionID, String questuionValue, String optionType) {
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    private String remarks;
+    public VotingModel(String serVay_ID, String selectedOptionValue, String selectedOptionID, String optionOne, String optionTwo, String questuionID, String questuionValue, String optionType, String optionOneID, String optionTwoID, String nonSelectedID) {
         this.serVay_ID = serVay_ID;
         this.selectedOptionValue = selectedOptionValue;
         this.selectedOptionID = selectedOptionID;
@@ -19,6 +30,33 @@ public class VotingModel {
         QuestuionID = questuionID;
         QuestuionValue = questuionValue;
         OptionType = optionType;
+        this.optionOneID = optionOneID;
+        this.optionTwoID = optionTwoID;
+        this.nonSelectedID = nonSelectedID;
+    }
+
+    public String getNonSelectedID() {
+        return nonSelectedID;
+    }
+
+    public void setNonSelectedID(String nonSelectedID) {
+        this.nonSelectedID = nonSelectedID;
+    }
+
+    public String getOptionOneID() {
+        return optionOneID;
+    }
+
+    public void setOptionOneID(String optionOneID) {
+        this.optionOneID = optionOneID;
+    }
+
+    public String getOptionTwoID() {
+        return optionTwoID;
+    }
+
+    public void setOptionTwoID(String optionTwoID) {
+        this.optionTwoID = optionTwoID;
     }
 
     public String getSerVay_ID() {

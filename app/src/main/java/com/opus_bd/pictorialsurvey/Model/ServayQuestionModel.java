@@ -11,6 +11,7 @@ private Option1 option1;
 private Option2 option2;
 
 private String optionType;
+private String questionKey;
 
 public String getQuestion() {
 return question;
@@ -44,4 +45,11 @@ public void setOptionType(String optionType) {
 this.optionType = optionType;
 }
 
+    public String getQuestionKey() {
+        return questionKey;
+    }
+
+    public void setQuestionKey(String questionKey) {
+        this.questionKey = questionKey;
+    }
 }

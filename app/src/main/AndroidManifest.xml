@@ -15,19 +15,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.LoginActivity"> <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Activity.Admin.VoteResult"></activity>
+        <activity android:name=".Activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activity.Admin.SurveyActivity" />
         <activity android:name=".Activity.Admin.AddNewSurveyActivity" />
         <activity android:name=".Activity.Admin.QuestionActivity" />
-        <activity android:name=".Activity.Admin.MainActivity">
-
-        </activity>
-        <activity android:name=".Activity.User.UserMainActivity"/>
-        <activity android:name=".Activity.User.SurveyUserActivity"/>
+        <activity android:name=".Activity.Admin.MainActivity"></activity>
+        <activity android:name=".Activity.User.UserMainActivity" />
+        <activity android:name=".Activity.User.SurveyUserActivity" />
     </application>
 
 </manifest>

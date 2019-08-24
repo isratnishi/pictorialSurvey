@@ -170,6 +170,7 @@ public class QuestionActivity extends AppCompatActivity {
         servayQuestionModel.setQuestion(etSetQuestion.getText().toString().trim());
         String option_1_key= databaseReference.child(key).push().getKey();
         servayQuestionModel.setOption1(new Option1(option_1_key,etSetQuestionAnswer1.getText().toString().trim()));
+        servayQuestionModel.setQuestionKey(key);
 
         String option_2_key= databaseReference.child(key).push().getKey();
         servayQuestionModel.setOption2(new Option2(option_2_key,etSetQuestionAnswer2.getText().toString().trim()));
