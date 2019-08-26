@@ -9,16 +9,6 @@ private String voteResult;
 
 private String voterID;
 
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    private String remarks;
-
 public String getVoteResult() {
 return voteResult;
 }

@@ -1,17 +1,19 @@
 package com.opus_bd.pictorialsurvey.Activity.User;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,11 +45,10 @@ import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SUR
 
 public class SurveyUserActivity extends AppCompatActivity {
     TextView tvName, tvDescription;
-    Button btnAddQuestion;
+    Button btnAddQuestion, btnVote;
     Survey survey;
-    String uid,remarks;
     FirebaseDatabase firebaseDatabase;
-LinearLayout llvote;
+
     private RecyclerView recyclerView;
     ViewItemsQuestionAdapter viewItemsAdapter;
     ArrayList<ServayQuestionModel> models = new ArrayList<>();
@@ -60,9 +61,8 @@ LinearLayout llvote;
         tvName = findViewById(R.id.tvName);
         tvDescription = findViewById(R.id.tvDescription);
         btnAddQuestion = findViewById(R.id.btnAddQuestion);
-        llvote = findViewById(R.id.llvote);
+        btnVote = findViewById(R.id.btnVote);
         btnAddQuestion.setVisibility(View.GONE);
-        llvote.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.Recyclerview);
     /*    Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -87,7 +87,7 @@ LinearLayout llvote;
         }
 
         initializeVariables();
-        btnAddQuestion.setOnClickListener(new View.OnClickListener() {
+        btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog();
@@ -96,75 +96,73 @@ LinearLayout llvote;
         });
 
     }
-    public  void  openVoteResultActivity (View view){
+
+    public void openVoteResultActivity(View view) {
         startActivity(new Intent(this, VoteResult.class));
     }
 
+    public void voteSubmit(String uid) {
+        if (votingModels.size() > 0) {
+            for (int i = 0; i < votingModels.size(); i++) {
+                final DatabaseReference reference = firebaseDatabase.getReference().child("voteHistory").child(votingModels.get(i).getQuestuionID());
+                String key = reference.push().getKey();
+                final VoteModel voteModel = new VoteModel();
+                voteModel.setVoteResult(votingModels.get(i).getSelectedOptionID());
+                voteModel.setVoterID(uid);
+                final int finalI = i;
+                firebaseDatabase.getReference().child("voteHistory").child(votingModels.get(i).getQuestuionID()).child(key).setValue(voteModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(SurveyUserActivity.this, "Vote done successfully", Toast.LENGTH_SHORT).show();
+                        firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getSelectedOptionID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot != null && dataSnapshot.exists()) {
+                                   // Toast.makeText(SurveyUserActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
+                                    int oldCount = Integer.parseInt(dataSnapshot.getValue().toString());
+                                    oldCount++;
+                                    firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getSelectedOptionID()).setValue(oldCount).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            //Toast.makeText(SurveyUserActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
+                                            // onBackPressed();
+                                        }
+                                    });
+                                    Intent intent = new Intent(SurveyUserActivity.this, UserMainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
 
 
-    public void voteSubmit(View view) {
-       showDialog();
+                                } else {
+                                    Toast.makeText(SurveyUserActivity.this, "Null", Toast.LENGTH_SHORT).show();
+                                    firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getSelectedOptionID()).setValue(1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
 
-    }
-public void SubmitToFirebase(String userid,String remarksdb){
-    if (votingModels.size() > 0) {
-        for (int i = 0; i < votingModels.size(); i++) {
-            final DatabaseReference reference = firebaseDatabase.getReference().child("voteHistory").child(votingModels.get(i).getQuestuionID());
-            String key = reference.push().getKey();
-            final VoteModel voteModel = new VoteModel();
-            voteModel.setVoteResult(votingModels.get(i).getSelectedOptionID());
-            voteModel.setVoterID(userid);
-            voteModel.setRemarks(remarksdb);
-            final int finalI = i;
-            firebaseDatabase.getReference().child("voteHistory").child(votingModels.get(i).getQuestuionID()).child(key).setValue(voteModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Toast.makeText(SurveyUserActivity.this, "Vote done successfully", Toast.LENGTH_SHORT).show();
-                    firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getSelectedOptionID()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot != null && dataSnapshot.exists()) {
-                                Toast.makeText(SurveyUserActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
-                                int oldCount = Integer.parseInt(dataSnapshot.getValue().toString());
-                                oldCount++;
-                                firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getSelectedOptionID()).setValue(oldCount).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(SurveyUserActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
-                                        // onBackPressed();
-                                    }
-                                });
+                                        }
+                                    });
 
-                            } else {
-                                Toast.makeText(SurveyUserActivity.this, "Null", Toast.LENGTH_SHORT).show();
-                                firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getSelectedOptionID()).setValue(1).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
+                                }
+                            }
 
-                                    }
-                                });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             }
-                        }
+                        });
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    //  firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getSelectedOptionID()).setValue("1");
+                        //  firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getSelectedOptionID()).setValue("1");
 
 
-                }
-            });
+                    }
+                });
 
-            firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID()).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot != null && dataSnapshot.exists()) {
-                        Toast.makeText(SurveyUserActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
-                        int oldCount = Integer.parseInt(dataSnapshot.getValue().toString());
+                firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot != null && dataSnapshot.exists()) {
+                            Toast.makeText(SurveyUserActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
+                            int oldCount = Integer.parseInt(dataSnapshot.getValue().toString());
                                    /* oldCount++;
                                     firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getSelectedOptionID()).setValue(oldCount).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -174,57 +172,62 @@ public void SubmitToFirebase(String userid,String remarksdb){
                                         }
                                     });
                                     */
-                        Toast.makeText(SurveyUserActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
-                        onBackPressed();
+                            Toast.makeText(SurveyUserActivity.this, "Survey Submited ", Toast.LENGTH_SHORT).show();
+                            onBackPressed();
 
-                    } else {
-                        Toast.makeText(SurveyUserActivity.this, "Null", Toast.LENGTH_SHORT).show();
-                        firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID()).setValue(0).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(SurveyUserActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
-                                onBackPressed();
-                            }
-                        });
+                        } else {
+                            Toast.makeText(SurveyUserActivity.this, "Null", Toast.LENGTH_SHORT).show();
+                            firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID()).setValue(0).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(SurveyUserActivity.this, "Survey Submited ", Toast.LENGTH_SHORT).show();
+                                    onBackPressed();
+                                }
+                            });
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                }
+                });
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            //  firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getSelectedOptionID()).setValue("1");
+                //  firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getSelectedOptionID()).setValue("1");
 
 
-
-
+            }
         }
+
     }
-}
+
     public void showDialog() {
         // Create custom dialog object
         final Dialog dialog = new Dialog(SurveyUserActivity.this);
         // Include dialog.xml file
-        dialog.setContentView(R.layout.user);
+        dialog.setContentView(R.layout.user_content_main);
         // Set dialog title
-        dialog.setTitle("Please Enter Your Name and Phone Number");
+        dialog.setTitle("Submit Your Answers");
 
         // set values for custom dialog components - text, image and button
         final EditText etUserId = dialog.findViewById(R.id.etUserId);
         final EditText etPassword = dialog.findViewById(R.id.etPassword);
-        final EditText etRemarks = dialog.findViewById(R.id.etRemarks);
-
         Button btnSave = dialog.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uid=etPassword.getText().toString();
-               remarks=etRemarks.getText().toString();
-                Toast.makeText(SurveyUserActivity.this, ""+uid, Toast.LENGTH_SHORT).show();
-                SubmitToFirebase(uid,remarks);
+
+                if (TextUtils.isEmpty(etUserId.getText().toString())) {
+                    etUserId.setError(getResources().getString(R.string.field_null_error));
+
+                } else if (TextUtils.isEmpty(etPassword.getText().toString())) {
+                    etPassword.setError(getResources().getString(R.string.field_null_error));
+                } else {
+                    showAlert(etPassword.getText().toString());
+                }
+
+
             }
         });
 
@@ -238,6 +241,30 @@ public void SubmitToFirebase(String userid,String remarksdb){
 
         dialog.show();
 
+    }
+
+    public void showAlert(final String id) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you Sure?");
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                        voteSubmit(id);
+
+
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     public void database() {

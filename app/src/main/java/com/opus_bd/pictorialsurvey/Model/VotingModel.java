@@ -12,15 +12,7 @@ public class VotingModel {
     String optionOneID;
     String optionTwoID;
     String nonSelectedID;
-    public String getRemarks() {
-        return remarks;
-    }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    private String remarks;
     public VotingModel(String serVay_ID, String selectedOptionValue, String selectedOptionID, String optionOne, String optionTwo, String questuionID, String questuionValue, String optionType, String optionOneID, String optionTwoID, String nonSelectedID) {
         this.serVay_ID = serVay_ID;
         this.selectedOptionValue = selectedOptionValue;

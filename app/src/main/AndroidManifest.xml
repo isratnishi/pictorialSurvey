@@ -29,6 +29,9 @@
         <activity android:name=".Activity.Admin.MainActivity"></activity>
         <activity android:name=".Activity.User.UserMainActivity" />
         <activity android:name=".Activity.User.SurveyUserActivity" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
 </manifest>

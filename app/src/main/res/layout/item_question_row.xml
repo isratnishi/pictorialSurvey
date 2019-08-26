@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:text="teamone"
             android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
             android:textColor="@android:color/black"
@@ -33,18 +33,20 @@
                 android:id="@+id/radioQuestionGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/answer1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+
                     android:layout_weight="1"
                     android:checked="true" />
 
                 <RadioButton
                     android:id="@+id/answer2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
 
@@ -61,37 +63,53 @@
                 android:id="@+id/imageanswer1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_margin="10dp"
+              android:layout_margin="20dp"
                 android:layout_weight="1"
+                android:layout_alignParentLeft="true"
+
                 android:background="@color/colorAccent"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitXY" />
 
             <ImageView
                 android:id="@+id/imageanswer2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 android:layout_weight="1"
+                android:layout_alignParentRight="true"
                 android:background="@color/colorAccent"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitXY" />
         </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:visibility="gone"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="true">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etRemarks"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/Counter1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="Remaks" />
+                android:layout_weight="1"
+                android:layout_gravity="start"
+                android:layout_margin="10dp"
+                android:text="0"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/Counter2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="start"
+                android:layout_margin="10dp"
+                android:text="0"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

@@ -9,8 +9,9 @@ public class QuestionAndVoteCount {
     String optionTwoCount;
     int firstoption;
     int secondoption;
+    String type;
 
-    public QuestionAndVoteCount(String questionBody, String optionID, String optionOneValue, String optionOneCount, String optionTwoValue, String optionTwoCount, int firstoption, int secondoption) {
+    public QuestionAndVoteCount(String questionBody, String optionID, String optionOneValue, String optionOneCount, String optionTwoValue, String optionTwoCount, int firstoption, int secondoption, String type) {
         QuestionBody = questionBody;
         OptionID = optionID;
         this.optionOneValue = optionOneValue;
@@ -19,6 +20,15 @@ public class QuestionAndVoteCount {
         this.optionTwoCount = optionTwoCount;
         this.firstoption = firstoption;
         this.secondoption = secondoption;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getFirstoption() {

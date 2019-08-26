@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.opus_bd.pictorialsurvey.Model.ServayQuestionModel;
 import com.opus_bd.pictorialsurvey.Model.VotingModel;
 import com.opus_bd.pictorialsurvey.R;
@@ -23,7 +24,7 @@ import java.util.List;
 public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItemsQuestionAdapterAdmin.ItemViewHolder> {
     private List<ServayQuestionModel> itemList;
     private Context context;
-
+    private int a1 = 0, a2 = 0, a3 = 0, a4 = 0;
 
     public ViewItemsQuestionAdapterAdmin(List<ServayQuestionModel> itemList, Context context) {
         this.itemList = itemList;
@@ -42,18 +43,44 @@ public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItem
     @Override
     public void onBindViewHolder(@NonNull final ViewItemsQuestionAdapterAdmin.ItemViewHolder holder, final int position) {
         final ServayQuestionModel question = itemList.get(position);
-        if (question.getOptionType().equals("PHOTO")){
+        if (question.getOptionType().equals("PHOTO")) {
             holder.imageanswer1.setVisibility(View.VISIBLE);
             holder.imageanswer2.setVisibility(View.VISIBLE);
             //show image on glide
-        }else {
+            Glide.with(context).load(question.getOption1().getValue()).into( holder.imageanswer1);
+            Glide.with(context).load(question.getOption2().getValue()).into( holder.imageanswer2);
+            holder.answer2.setVisibility(View.GONE);
+            holder.answer1.setVisibility(View.GONE);
+
+        } else {
             holder.imageanswer1.setVisibility(View.GONE);
             holder.imageanswer2.setVisibility(View.GONE);
+            holder.answer2.setVisibility(View.VISIBLE);
+            holder.answer1.setVisibility(View.VISIBLE);
         }
 
 
 
-    holder.question.setText("Q. "+question.getQuestion());
+        holder.answer1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                a3++;
+                holder.Counter1.setText(String.valueOf(a3));
+            }
+        });
+
+
+
+        holder.answer2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                a4++;
+                holder.Counter2.setText(String.valueOf(a4));
+            }
+        });
+        Log.d("tag", " key " + itemList.get(position));
+
+  //  holder.question.setText(question.getQuestion());
 
         holder.answer2.setText(itemList.get(position).getOption2().getValue());
         holder.answer1.setText(itemList.get(position).getOption1().getValue());
@@ -68,6 +95,7 @@ public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItem
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView question;
+        TextView Counter1, Counter2;
         RadioButton answer1, answer2;
         ImageView imageanswer1, imageanswer2;
         CardView rootLayout;

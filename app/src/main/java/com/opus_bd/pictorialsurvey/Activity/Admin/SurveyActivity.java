@@ -35,7 +35,7 @@ import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SUR
 
 public class SurveyActivity extends AppCompatActivity {
     TextView tvName, tvDescription;
-    Button btnAddQuestion,btnsub;
+    Button btnAddQuestion,btnVote;
     Survey survey;
 
     private RecyclerView recyclerView;
@@ -49,8 +49,8 @@ public class SurveyActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tvName);
         tvDescription = findViewById(R.id.tvDescription);
         btnAddQuestion = findViewById(R.id.btnAddQuestion);
-        btnsub = findViewById(R.id.btnsub);
-        btnsub.setVisibility(View.GONE);
+        btnVote = findViewById(R.id.btnVote);
+        btnVote.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.Recyclerview);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -145,7 +145,7 @@ public class SurveyActivity extends AppCompatActivity {
 
 
                 models.clear();
-                Toast.makeText(SurveyActivity.this, "data downloaded", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SurveyActivity.this, "data downloaded", Toast.LENGTH_SHORT).show();
 
                 try {
                     for (DataSnapshot tempDataSnapShot : dataSnapshot.getChildren()) {
@@ -160,7 +160,7 @@ public class SurveyActivity extends AppCompatActivity {
 
                     viewItemsAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
-                    Toast.makeText(SurveyActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                   // Toast.makeText(SurveyActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 }
 
 

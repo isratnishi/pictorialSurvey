@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,22 +24,38 @@ import com.opus_bd.pictorialsurvey.R;
 import java.util.ArrayList;
 
 
+import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY;
 import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY_ID;
 
 public class VoteResult extends AppCompatActivity {
+    TextView tvName, tvDescription;
     RecyclerView Recyclerview;
     ArrayList<QuestionAndVoteCount> models = new ArrayList<>();
     QuestionsLitsAdapter myAdapter;
     String Option_1_vote_count = "0";
     String Option_2_vote_count = "0";
+    TextView totalParticipate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote_result);
-       Recyclerview=findViewById(R.id.Recyclerview);
+        Recyclerview=findViewById(R.id.Recyclerview);
+        totalParticipate=findViewById(R.id.totalParticipate);
+        tvName = findViewById(R.id.tvName);
+        tvDescription = findViewById(R.id.tvDescription);
         initRecycler();
         database();
+
+        try {
+            if (true) {
+                tvName.setText(CURRENTLY_SHOWING_SURVEY.getSurveyName());
+            }
+            if (true) {
+                tvDescription.setText(CURRENTLY_SHOWING_SURVEY.getDescription());
+            }
+        } catch (Exception e) {
+        }
 
     }
 
@@ -103,7 +120,15 @@ public class VoteResult extends AppCompatActivity {
                                         int first = ((Integer.parseInt(Option_1_vote_count))* 100) / total_count;
                                         int second = ((Integer.parseInt(Option_2_vote_count))* 100) / total_count;
 
-                                        models.add(new QuestionAndVoteCount(foodItem.getQuestion(), foodItem.getQuestionKey(), foodItem.getOption1().getValue(), String.valueOf(Option_1_vote_count), foodItem.getOption2().getValue(), String.valueOf(Option_2_vote_count), first, second));
+                                       try {
+                                           totalParticipate.setText("Total Participate "+total_count);
+                                       }
+                                       catch (Exception e){}
+
+
+
+
+                                        models.add(new QuestionAndVoteCount(foodItem.getQuestion(), foodItem.getQuestionKey(), foodItem.getOption1().getValue(), String.valueOf(Option_1_vote_count), foodItem.getOption2().getValue(), String.valueOf(Option_2_vote_count), first, second,foodItem.getOptionType()));
                                         myAdapter.notifyItemInserted(models.size() - 1);
                                     } else {
                                         Option_2_vote_count = "0";
