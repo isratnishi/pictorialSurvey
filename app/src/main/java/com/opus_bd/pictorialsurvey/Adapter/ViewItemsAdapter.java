@@ -24,6 +24,7 @@ import java.util.List;
 
 import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY;
 import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY_ID;
+import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY_STATUS;
 
 public class ViewItemsAdapter extends RecyclerView.Adapter<ViewItemsAdapter.ItemViewHolder> {
     private List<Survey> itemList;
@@ -63,6 +64,7 @@ public class ViewItemsAdapter extends RecyclerView.Adapter<ViewItemsAdapter.Item
                 } else {
                     if (survey.getKey() != null) {
                         CURRENTLY_SHOWING_SURVEY_ID = survey.getKey();
+                        CURRENTLY_SHOWING_SURVEY_STATUS= survey.getSurveyCondition();
                         CURRENTLY_SHOWING_SURVEY=survey;
 
                        context.startActivity(intent);

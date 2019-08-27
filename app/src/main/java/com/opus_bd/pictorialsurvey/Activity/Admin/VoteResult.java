@@ -158,7 +158,7 @@ public class VoteResult extends AppCompatActivity {
                             });
 
 
-                            firebaseDatabase.getReference().child("vote_count").child(foodItem.getQuestionKey()).child(foodItem.getOption3().getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                       /*     firebaseDatabase.getReference().child("vote_count").child(foodItem.getQuestionKey()).child(foodItem.getOption3().getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot_three) {
                                     if (dataSnapshot_three != null && dataSnapshot_three.exists()) {
@@ -244,7 +244,7 @@ public class VoteResult extends AppCompatActivity {
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                 }
-                            });
+                            });*/
                         }
 
                     }

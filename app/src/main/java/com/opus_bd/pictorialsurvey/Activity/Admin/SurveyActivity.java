@@ -35,6 +35,7 @@ import java.util.Map;
 
 import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY;
 import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY_ID;
+import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY_STATUS;
 
 public class SurveyActivity extends AppCompatActivity {
     TextView tvName, tvDescription;
@@ -67,6 +68,14 @@ public class SurveyActivity extends AppCompatActivity {
             if (true) {
                 tvDescription.setText(CURRENTLY_SHOWING_SURVEY.getDescription());
             }
+            if(CURRENTLY_SHOWING_SURVEY_STATUS!=null)
+            {
+                if(CURRENTLY_SHOWING_SURVEY_STATUS.equals("Open")){
+                    btnClose.setText("Close");
+                }
+
+                else btnClose.setText("Reopen");
+            }
         } catch (Exception e) {
         }
 
@@ -95,7 +104,18 @@ public class SurveyActivity extends AppCompatActivity {
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAlert();
+
+                if(CURRENTLY_SHOWING_SURVEY.getSurveyCondition()!=null)
+                {
+                    if(CURRENTLY_SHOWING_SURVEY.getSurveyCondition().equals("Open"))
+                    {
+                        showAlert("Close");
+
+                    }
+
+                    else showAlert("Open");
+                }
+               ;
             }
         });
 
@@ -103,7 +123,7 @@ public class SurveyActivity extends AppCompatActivity {
     public  void  openVoteResultActivity (View view){
         startActivity(new Intent(this,VoteResult.class));
     }
-    public void showAlert() {
+    public void showAlert(final String con) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Are you Sure to close this survey?");
         alertDialogBuilder.setPositiveButton("Yes",
@@ -111,7 +131,7 @@ public class SurveyActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
 
-                        editData();
+                        editData(con);
 
 
                     }
@@ -164,15 +184,22 @@ public class SurveyActivity extends AppCompatActivity {
         dialog.show();
 
     }
-    private void editData(){
+    private void editData(final String con){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference reference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.SURVEY_LIST).child(CURRENTLY_SHOWING_SURVEY_ID);
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                dataSnapshot.getRef().child("surveyCondition").setValue("Close");
-                Toast.makeText(SurveyActivity.this,"Data Edited",Toast.LENGTH_LONG).show();
+                dataSnapshot.getRef().child("surveyCondition").setValue(con);
+                Toast.makeText(SurveyActivity.this,"Data Edited "+con,Toast.LENGTH_LONG).show();
+               // Toast.makeText(SurveyActivity.this,"Data Edited",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(SurveyActivity.this, AdminHomeActivity.class);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra(Constant.EXTRA_ITEM, survey);
+
+                startActivity(intent);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

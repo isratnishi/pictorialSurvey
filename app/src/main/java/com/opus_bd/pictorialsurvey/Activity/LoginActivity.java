@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.opus_bd.pictorialsurvey.Activity.Admin.AdminHomeActivity;
 import com.opus_bd.pictorialsurvey.Activity.Admin.MainActivity;
 import com.opus_bd.pictorialsurvey.Activity.User.UserMainActivity;
 import com.opus_bd.pictorialsurvey.R;
@@ -62,7 +63,7 @@ ImageView image;
             @Override
             public void onClick(View view) {
                 if (etUserId.getText().toString().equals("ADMIN") && etPassword.getText().toString().equals("123456")) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
                     startActivity(intent);
                 }
 

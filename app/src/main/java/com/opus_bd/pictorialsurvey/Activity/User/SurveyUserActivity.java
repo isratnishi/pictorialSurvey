@@ -45,7 +45,7 @@ import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SUR
 
 public class SurveyUserActivity extends AppCompatActivity {
     TextView tvName, tvDescription;
-    Button btnAddQuestion, btnVote;
+    Button btnAddQuestion, btnVote,btnClose;
     Survey survey;
     FirebaseDatabase firebaseDatabase;
 
@@ -64,7 +64,8 @@ public class SurveyUserActivity extends AppCompatActivity {
         btnVote = findViewById(R.id.btnVote);
         btnAddQuestion.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.Recyclerview);
-
+        btnClose = findViewById(R.id.btnClose);
+        btnClose.setVisibility(View.GONE);
         tvName.setText(CURRENTLY_SHOWING_SURVEY.getSurveyName());
         tvDescription.setText(CURRENTLY_SHOWING_SURVEY.getDescription());
         try {

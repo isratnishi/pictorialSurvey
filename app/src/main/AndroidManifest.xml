@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.Admin.VoteResult"></activity>
+        <activity android:name=".Activity.Admin.AdminHomeActivity"></activity>
+        <activity android:name=".Activity.Admin.VoteResult" />
         <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,9 +27,10 @@
         <activity android:name=".Activity.Admin.SurveyActivity" />
         <activity android:name=".Activity.Admin.AddNewSurveyActivity" />
         <activity android:name=".Activity.Admin.QuestionActivity" />
-        <activity android:name=".Activity.Admin.MainActivity"></activity>
+        <activity android:name=".Activity.Admin.MainActivity" />
         <activity android:name=".Activity.User.UserMainActivity" />
         <activity android:name=".Activity.User.SurveyUserActivity" />
+        <activity android:name=".Activity.Admin.ClosedSurveyActivity"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

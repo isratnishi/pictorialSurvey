@@ -28,18 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Created by mukul on 3/10/2019.
- */
-
-
 public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdapter.MyViewHolder> {
     List<QuestionAndVoteCount> list = new ArrayList<>();
 
     Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_questionBody, tv_option_1, tv_option_1_vote, tv_option_2, tv_option_2_vote;
+        public TextView tv_questionBody, tv_option_1, tv_option_1_vote, tv_option_2, tv_option_2_vote, tv_option_3, tv_option_3_vote, tv_option_4, tv_option_4_vote;
         RelativeLayout relative_container;
         ProgressBar first, second;
         ImageView image_one, image_two;
@@ -51,6 +46,7 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
         ArrayList PieEntryLabels;
 
         RelativeLayout rvpic;
+
         public MyViewHolder(View view) {
             super(view);
             tv_questionBody = (TextView) view.findViewById(R.id.tv_questionBody);
@@ -58,6 +54,10 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
             tv_option_1_vote = (TextView) view.findViewById(R.id.tv_option_1_vote);
             tv_option_2 = (TextView) view.findViewById(R.id.tv_option_2);
             tv_option_2_vote = (TextView) view.findViewById(R.id.tv_option_2_vote);
+            tv_option_3 = (TextView) view.findViewById(R.id.tv_option_3);
+            tv_option_3_vote = (TextView) view.findViewById(R.id.tv_option_3_vote);
+            tv_option_4 = (TextView) view.findViewById(R.id.tv_option_4);
+            tv_option_4_vote = (TextView) view.findViewById(R.id.tv_option_4_vote);
             first = (ProgressBar) view.findViewById(R.id.first);
             second = (ProgressBar) view.findViewById(R.id.second);
 
@@ -68,7 +68,6 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
 
 
         }
-
 
 
     }
@@ -94,11 +93,28 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final QuestionAndVoteCount movie = list.get(position);
         context = holder.tv_questionBody.getContext();
-        holder.tv_questionBody.setText("Q. "+movie.getQuestionBody());
+        holder.tv_questionBody.setText("Q. " + movie.getQuestionBody());
         holder.tv_option_1.setText(movie.getOptionOneValue());
         holder.tv_option_2.setText(movie.getOptionTwoValue());
+        holder.tv_option_3.setText(movie.getOptionThreeValue());
+        holder.tv_option_4.setText(movie.getOptionFourValue());
+        if(movie.getOptionOneValue().equals(""))
+        { holder.tv_option_1_vote.setVisibility(View.GONE);
+
+        } if(movie.getOptionTwoValue().equals(""))
+        {
+            holder.tv_option_2_vote.setVisibility(View.GONE);
+        } if(movie.getOptionThreeValue().equals(""))
+        {
+            holder.tv_option_3_vote.setVisibility(View.GONE);
+        } if(movie.getOptionFourValue().equals(""))
+        {
+            holder.tv_option_4_vote.setVisibility(View.GONE);
+        }
         holder.tv_option_1_vote.setText(movie.getOptionOneCount() + " votes (" + movie.getFirstoption() + ")%");
         holder.tv_option_2_vote.setText(movie.getOptionTwoCount() + " votes (" + movie.getSecondoption() + ")%");
+        holder.tv_option_3_vote.setText(movie.getOptionThreeCount() + " votes (" + movie.getThirdoption() + ")%");
+        holder.tv_option_4_vote.setText(movie.getOptionFourCount() + " votes (" + movie.getForthoption() + ")%");
         holder.first.setProgress(movie.getFirstoption());
         holder.second.setProgress(movie.getSecondoption());
 
@@ -112,17 +128,24 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
             Glide.with(context).load(movie.getOptionTwoValue()).into(holder.image_two);
             holder.tv_option_1.setVisibility(View.GONE);
             holder.tv_option_2.setVisibility(View.GONE);
+            holder.tv_option_3.setVisibility(View.GONE);
+            holder.tv_option_4.setVisibility(View.GONE);
         }
         holder.pieEntries = new ArrayList<>();
 
         if (movie.getType().equals("TEXT")) {
             holder.pieEntries.add(new PieEntry(movie.getFirstoption(), movie.getOptionOneValue()));
+
+            if (movie.getOptionTwoValue()!=null)
             holder.pieEntries.add(new PieEntry(movie.getSecondoption(), movie.getOptionTwoValue()));
+            if (movie.getOptionThreeValue()!=null)
+            holder.pieEntries.add(new PieEntry(movie.getThirdoption(), movie.getOptionThreeValue()));
+            if (movie.getOptionFourValue()!=null)
+            holder.pieEntries.add(new PieEntry(movie.getForthoption(), movie.getOptionFourValue()));
         } else {
             holder.pieEntries.add(new PieEntry(movie.getFirstoption(), "Picture 1"));
             holder.pieEntries.add(new PieEntry(movie.getSecondoption(), "Picture 2"));
         }
-
 
 
         holder.pieDataSet = new PieDataSet(holder.pieEntries, "");
@@ -134,7 +157,7 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
         holder.pieDataSet.setSliceSpace(1f);
         holder.pieDataSet.setValueTextColor(Color.WHITE);
         //holder.pieDataSet.setValueTextSize(10f);
-       // holder.pieDataSet.setSliceSpace(1f);
+        // holder.pieDataSet.setSliceSpace(1f);
 
     }
 
