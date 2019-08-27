@@ -55,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
                     Survey foodItem = tempDataSnapShot.getValue(Survey.class);
 
                     if (foodItem != null) {
-                        models.add(foodItem);
+                        if(foodItem.getSurveyCondition().equals("Open"))
+                        {
+                            models.add(foodItem);
+                        }
+
 
                     }
 

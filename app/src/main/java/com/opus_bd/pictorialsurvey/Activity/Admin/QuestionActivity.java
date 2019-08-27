@@ -51,6 +51,8 @@ import com.opus_bd.pictorialsurvey.Activity.LoginActivity;
 import com.opus_bd.pictorialsurvey.Model.Constant;
 import com.opus_bd.pictorialsurvey.Model.Option1;
 import com.opus_bd.pictorialsurvey.Model.Option2;
+import com.opus_bd.pictorialsurvey.Model.Option3;
+import com.opus_bd.pictorialsurvey.Model.Option4;
 import com.opus_bd.pictorialsurvey.Model.Question;
 import com.opus_bd.pictorialsurvey.Model.ServayQuestionModel;
 import com.opus_bd.pictorialsurvey.Model.Survey;
@@ -87,6 +89,8 @@ public class QuestionActivity extends AppCompatActivity {
     TextInputEditText etSetQuestion;
     TextInputEditText etSetQuestionAnswer1;
     TextInputEditText etSetQuestionAnswer2;
+    TextInputEditText etSetQuestionAnswer3;
+    TextInputEditText etSetQuestionAnswer4;
     ImageView imgSetQuestionAnswer1;
     ImageView imgSetQuestionAnswer2;
     LinearLayout llTextAnswer;
@@ -142,27 +146,6 @@ public class QuestionActivity extends AppCompatActivity {
         initializeveriable();
         //requestMultiplePermissions();
         spnGender.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-   /*     imgSetQuestionAnswer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPictureDialog(imgSetQuestionAnswer1);
-                setImageView(imgSetQuestionAnswer1);
-                CURRENTLY_SELECTING_IMAGEVIEW=FIRST_IMAGE;
-                //path1=getPath();
-            }
-        });
-        imgSetQuestionAnswer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPictureDialog(imgSetQuestionAnswer2);
-                setImageView(imgSetQuestionAnswer2);
-                CURRENTLY_SELECTING_IMAGEVIEW=SECOND_IMAGE;
-
-
-                //path2=getPath();
-            }
-        });
-        */
 
 
     }
@@ -221,6 +204,8 @@ public class QuestionActivity extends AppCompatActivity {
         etSetQuestion = findViewById(R.id.etSetQuestion);
         etSetQuestionAnswer1 = findViewById(R.id.etSetQuestionAnswer1);
         etSetQuestionAnswer2 = findViewById(R.id.etSetQuestionAnswer2);
+        etSetQuestionAnswer3 = findViewById(R.id.etSetQuestionAnswer3);
+        etSetQuestionAnswer4 = findViewById(R.id.etSetQuestionAnswer4);
         imgSetQuestionAnswer1 = findViewById(R.id.imgSetQuestionAnswer1);
         imgSetQuestionAnswer2 = findViewById(R.id.imgSetQuestionAnswer2);
         llTextAnswer = findViewById(R.id.llTextAnswer);
@@ -243,6 +228,10 @@ public class QuestionActivity extends AppCompatActivity {
 
         String option_2_key = databaseReference.child(key).push().getKey();
         servayQuestionModel.setOption2(new Option2(option_2_key, etSetQuestionAnswer2.getText().toString().trim()));
+        String option_3_key = databaseReference.child(key).push().getKey();
+        servayQuestionModel.setOption3(new Option3(option_3_key, etSetQuestionAnswer3.getText().toString().trim()));
+        String option_4_key = databaseReference.child(key).push().getKey();
+        servayQuestionModel.setOption4(new Option4(option_4_key, etSetQuestionAnswer4.getText().toString().trim()));
         servayQuestionModel.setOptionType("TEXT");
         databaseReference.child(key).setValue(servayQuestionModel).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -251,73 +240,7 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        Map<String, String> firebaseDataMap = new HashMap<>();
-        firebaseDataMap.put(Constant.SETQUESTION, etSetQuestion.getText().toString());
-        firebaseDataMap.put(Constant.ANSWER1, etSetQuestionAnswer1.getText().toString());
-        firebaseDataMap.put(Constant.ANSWER2, etSetQuestionAnswer2.getText().toString());
 
-
-        Question question = new Question();
-        question.setQuestion(etSetQuestion.getText().toString());
-        question.setAnswer1(etSetQuestionAnswer1.getText().toString());
-        question.setAnswer2(etSetQuestionAnswer2.getText().toString());
-        databaseReference.push().setValue(question);
-
-
-
-        Query query = databaseReference.orderByChild(Constant.SETSURVEY).equalTo(survey.getSurveyName());
-        query.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-      /*  mDatabaseReference = mDatabase.getReference().child("question");
-        mDatabaseReference.setValue(question);*/
-/*
-        Map<String, String> firebaseDataMap = new HashMap<>();
-
-        Question question = new Question( );
-        question.setAnswer1(etSetQuestionAnswer1.getText().toString());
-        question.setAnswer2(etSetQuestionAnswer2.getText().toString());
-        .push().setValue(scheduleModel);
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference usersRef = rootRef.child("question");
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                dataSnapshot.child(etSetQuestion.getText().toString()).getRef().setValue(question);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        };
-        usersRef.addListenerForSingleValueEvent(eventListener);*/
         Intent intent = new Intent(this, SurveyActivity.class);
         intent.putExtra(Constant.EXTRA_ITEM, survey);
         //  intent.putExtra(Constant.EXTRA_ITEM1, survey1);*/
@@ -326,85 +249,8 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
-    public void SubmittoDb(String a, String b) {
-        count = count + 1;
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.QUESTION).child(survey.getSurveyName());
-        //String key = databaseReference.push().getKey();
-
-        Map<String, String> firebaseDataMap = new HashMap<>();
-        firebaseDataMap.put(Constant.SETQUESTION, etSetQuestion.getText().toString());
-        firebaseDataMap.put(Constant.IMAGE_ANSWER1, a);
-        firebaseDataMap.put(Constant.IMAGE_ANSWER2, b);
-
-
-        Question question = new Question();
-        question.setQuestion(etSetQuestion.getText().toString());
-        question.setImageanswer1(a);
-        question.setImageanswer2(b);
-        databaseReference.push().setValue(question);
-
-        Query query = databaseReference.orderByChild(Constant.SETSURVEY).equalTo(survey.getSurveyName());
-        query.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-   /*     final Question question = new Question();
-        question.setQuestion(etSetQuestion.getText().toString());
-        question.setAnswer1(a);
-        question.setAnswer2(b);
-        question.setUid(String.valueOf(count));
-      *//*  mDatabaseReference = mDatabase.getReference().child("question");
-        mDatabaseReference.setValue(question);*//*
-
-
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference usersRef = rootRef.child("question");
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                dataSnapshot.child(etSetQuestion.getText().toString()).getRef().setValue(question);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        };
-        usersRef.addListenerForSingleValueEvent(eventListener);*/
-
-    }
 
     public void SubmitPicture(View view) {
-      /* SubmittoDb(path1, path2);
-        upload();
-        Intent intent = new Intent(this, SurveyActivity.class);
-       /* intent.putExtra(Constant.EXTRA_ITEM, survey);
-        intent.putExtra(Constant.EXTRA_ITEM1, survey1);*/
-        //startActivity(intent);
         if (FIRST_IMAGE_PATH != null && SECOND_IMAGE_PATH != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("1st image Uploading...");
@@ -415,13 +261,11 @@ public class QuestionActivity extends AppCompatActivity {
 
             ref = storageReference.child("images/" + UUID.randomUUID().toString());
 
-            //upload first image
             ref.putFile(FIRST_IMAGE_PATH)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Toast.makeText(context, ref.getPath(), Toast.LENGTH_SHORT).show();
-                            // Glide.with(context).load(resultUri).into(imgSetQuestionAnswer2);
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -445,8 +289,7 @@ public class QuestionActivity extends AppCompatActivity {
                                                             Toast.makeText(QuestionActivity.this, "Both file is uploaded", Toast.LENGTH_SHORT).show();
 
                                                             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                                                            //final DatabaseReference databaseReference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.QUESTION).child(survey.getSurveyName());
-                                                            //String key = databaseReference.push().getKey();
+
                                                             DatabaseReference databaseReference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.SURVEY_LIST).child(CURRENTLY_SHOWING_SURVEY_ID).child("options");
                                                             String key = databaseReference.push().getKey();
                                                             ServayQuestionModel servayQuestionModel = new ServayQuestionModel();
@@ -465,8 +308,6 @@ public class QuestionActivity extends AppCompatActivity {
                                                                     onBackPressed();
                                                                 }
                                                             });
-
-
 
 
                                                         }
@@ -537,46 +378,6 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
-    private void showPictureDialog(final View view) {
-        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
-        pictureDialog.setTitle("Select Action");
-        String[] pictureDialogItems = {
-                "Select photo from gallery",
-                "Capture photo from camera"};
-        pictureDialog.setItems(pictureDialogItems,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                choosePhotoFromGallary();
-                                break;
-                            case 1:
-                                takePhotoFromCamera();
-                                break;
-                        }
-                    }
-                });
-        pictureDialog.show();
-    }
-
-    public void choosePhotoFromGallary() {
-      /*  Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-        startActivityForResult(galleryIntent, GALLERY);*/
-
-        //we will pick images
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(intent, PICK_IMG);
-    }
-
-    private void takePhotoFromCamera() {
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA);
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -623,13 +424,6 @@ galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
                     }
 
 
-                 /*   path1 = ImageList.get(0).toString();
-                    uploadImage(ImageList.get(0));
-                    path2 = ImageList.get(1).toString();
-                    uploadImage(ImageList.get(1));
-                   /* textView.setVisibility(View.VISIBLE);
-                    textView.setText("You Have Selected "+ ImageList.size() +" Pictures" );
-                    choose.setVisibility(View.GONE);*/
                 }
 
             }
@@ -637,8 +431,6 @@ galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
         } else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             encodeBitmapAndSaveToFirebase(thumbnail);
-            // imgSetQuestionAnswer1.setImageBitmap(thumbnail);
-            // saveImage(thumbnail);
 
             String path = saveImage(thumbnail);
 
@@ -667,48 +459,6 @@ galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
         StorageReference im = FirebaseStorage.getInstance().getReference().child("ImageFolder");
     }
 
-    public void upload() {
-
-        final StorageReference ImageFolder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
-        for (uploads = 0; uploads < ImageList.size(); uploads++) {
-            Uri Image = ImageList.get(uploads);
-            final StorageReference imagename = ImageFolder.child("image/" + Image.getLastPathSegment());
-
-            imagename.putFile(ImageList.get(uploads)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    imagename.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-
-                            String url = String.valueOf(uri);
-                            SendLink(url);
-                        }
-                    });
-
-                }
-            });
-
-
-        }
-
-
-    }
-
-    private void SendLink(String url) {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("link", url);
-        mDatabaseReference.push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-
-                Toast.makeText(QuestionActivity.this, "Image Uploaded Successfully", Toast.LENGTH_SHORT).show();
-                ImageList.clear();
-            }
-        });
-
-
-    }
 
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -738,72 +488,6 @@ galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
         return "";
     }
 
-    private void requestMultiplePermissions() {
-        Dexter.withActivity(this)
-                .withPermissions(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-                        }
-                        if (report.isAnyPermissionPermanentlyDenied()) {
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<com.karumi.dexter.listener.PermissionRequest> permissions, PermissionToken token) {
-
-                    }
-
-
-                }).
-                withErrorListener(new PermissionRequestErrorListener() {
-                    @Override
-                    public void onError(DexterError error) {
-                        Toast.makeText(getApplicationContext(), "Some Error! ", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .onSameThread()
-                .check();
-    }
-
-    private void uploadImage(Uri filePath) {
-
-        if (filePath != null) {
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-
-                            Toast.makeText(QuestionActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(QuestionActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
-                        }
-                    });
-        }
-    }
 
     @Override
     public void onBackPressed() {

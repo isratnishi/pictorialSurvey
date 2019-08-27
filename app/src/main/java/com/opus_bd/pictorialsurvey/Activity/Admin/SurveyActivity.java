@@ -1,6 +1,7 @@
 package com.opus_bd.pictorialsurvey.Activity.Admin;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.opus_bd.pictorialsurvey.Adapter.ViewItemsQuestionAdapter;
 import com.opus_bd.pictorialsurvey.Adapter.ViewItemsQuestionAdapterAdmin;
@@ -35,7 +38,7 @@ import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SUR
 
 public class SurveyActivity extends AppCompatActivity {
     TextView tvName, tvDescription;
-    Button btnAddQuestion,btnVote;
+    Button btnAddQuestion,btnVote,btnClose;
     Survey survey;
 
     private RecyclerView recyclerView;
@@ -50,6 +53,7 @@ public class SurveyActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tvDescription);
         btnAddQuestion = findViewById(R.id.btnAddQuestion);
         btnVote = findViewById(R.id.btnVote);
+        btnClose = findViewById(R.id.btnClose);
         btnVote.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.Recyclerview);
         Bundle bundle = getIntent().getExtras();
@@ -88,11 +92,40 @@ public class SurveyActivity extends AppCompatActivity {
             }
         });
 
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlert();
+            }
+        });
+
     }
     public  void  openVoteResultActivity (View view){
         startActivity(new Intent(this,VoteResult.class));
     }
+    public void showAlert() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you Sure to close this survey?");
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
 
+                        editData();
+
+
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
     public void showDialog() {
         // Create custom dialog object
         final Dialog dialog = new Dialog(SurveyActivity.this);
@@ -131,7 +164,22 @@ public class SurveyActivity extends AppCompatActivity {
         dialog.show();
 
     }
+    private void editData(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference reference = firebaseDatabase.getReference().child(Constant.SURVEY).child(Constant.SURVEY_LIST).child(CURRENTLY_SHOWING_SURVEY_ID);
 
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.getRef().child("surveyCondition").setValue("Close");
+                Toast.makeText(SurveyActivity.this,"Data Edited",Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(SurveyActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
     public void database() {
         // Toast.makeText(this, "method worked", Toast.LENGTH_SHORT).show();
 
@@ -152,6 +200,7 @@ public class SurveyActivity extends AppCompatActivity {
                         ServayQuestionModel foodItem = tempDataSnapShot.getValue(ServayQuestionModel.class);
 
                         if (foodItem != null) {
+
                             models.add(foodItem);
 
 
@@ -194,7 +243,5 @@ public class SurveyActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void voteSubmit(View view) {
 
-    }
 }

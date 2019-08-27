@@ -34,14 +34,16 @@ public class VoteResult extends AppCompatActivity {
     QuestionsLitsAdapter myAdapter;
     String Option_1_vote_count = "0";
     String Option_2_vote_count = "0";
+    String Option_3_vote_count = "0";
+    String Option_4_vote_count = "0";
     TextView totalParticipate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote_result);
-        Recyclerview=findViewById(R.id.Recyclerview);
-        totalParticipate=findViewById(R.id.totalParticipate);
+        Recyclerview = findViewById(R.id.Recyclerview);
+        totalParticipate = findViewById(R.id.totalParticipate);
         tvName = findViewById(R.id.tvName);
         tvDescription = findViewById(R.id.tvDescription);
         initRecycler();
@@ -68,7 +70,7 @@ public class VoteResult extends AppCompatActivity {
         myAdapter = new QuestionsLitsAdapter(models);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(Recyclerview.getContext(),
                 layoutManager.getOrientation());
-      //  Recyclerview.addItemDecoration(dividerItemDecoration);
+        //  Recyclerview.addItemDecoration(dividerItemDecoration);
         Recyclerview.setAdapter(myAdapter);
     }
 
@@ -81,7 +83,7 @@ public class VoteResult extends AppCompatActivity {
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-              //  Toast.makeText(VoteResult.this, dataSnapshot.toString(), Toast.LENGTH_LONG).show();
+                //  Toast.makeText(VoteResult.this, dataSnapshot.toString(), Toast.LENGTH_LONG).show();
 
 
                 models.clear();
@@ -92,6 +94,8 @@ public class VoteResult extends AppCompatActivity {
                         final ServayQuestionModel foodItem = tempDataSnapShot.getValue(ServayQuestionModel.class);
                         Option_2_vote_count = "0";
                         Option_1_vote_count = "0";
+                        Option_3_vote_count = "0";
+                        Option_4_vote_count = "0";
 
                         if (foodItem != null) {
                             firebaseDatabase.getReference().child("vote_count").child(foodItem.getQuestionKey()).child(foodItem.getOption1().getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -116,22 +120,34 @@ public class VoteResult extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot_two) {
                                     if (dataSnapshot_two != null && dataSnapshot_two.exists()) {
                                         Option_2_vote_count = dataSnapshot_two.getValue().toString();
-                                        int total_count = Integer.parseInt(Option_1_vote_count) + Integer.parseInt(Option_2_vote_count);
-                                        int first = ((Integer.parseInt(Option_1_vote_count))* 100) / total_count;
-                                        int second = ((Integer.parseInt(Option_2_vote_count))* 100) / total_count;
+                                        int total_count = Integer.parseInt(Option_1_vote_count) + Integer.parseInt(Option_2_vote_count)+ Integer.parseInt(Option_3_vote_count)+ Integer.parseInt(Option_4_vote_count);
+                                        int first = ((Integer.parseInt(Option_1_vote_count)) * 100) / total_count;
+                                        int second = ((Integer.parseInt(Option_2_vote_count)) * 100) / total_count;
+                                        int third = ((Integer.parseInt(Option_3_vote_count)) * 100) / total_count;
+                                        int forth = ((Integer.parseInt(Option_4_vote_count)) * 100) / total_count;
+                                        try {
+                                            totalParticipate.setText("Total Participate " + total_count);
+                                        } catch (Exception e) {
+                                        }
 
-                                       try {
-                                           totalParticipate.setText("Total Participate "+total_count);
-                                       }
-                                       catch (Exception e){}
 
-
-
-
-                                        models.add(new QuestionAndVoteCount(foodItem.getQuestion(), foodItem.getQuestionKey(), foodItem.getOption1().getValue(), String.valueOf(Option_1_vote_count), foodItem.getOption2().getValue(), String.valueOf(Option_2_vote_count), first, second,foodItem.getOptionType()));
+                                        models.add(new QuestionAndVoteCount(foodItem.getQuestion(),
+                                                foodItem.getQuestionKey(),
+                                                foodItem.getOption1().getValue(),
+                                                String.valueOf(Option_1_vote_count),
+                                                foodItem.getOption2().getValue(),
+                                                String.valueOf(Option_2_vote_count),
+                                                foodItem.getOption3().getValue(),
+                                                String.valueOf(Option_3_vote_count),
+                                                foodItem.getOption4().getValue(),
+                                                String.valueOf(Option_4_vote_count),
+                                                first, second,third,forth,
+                                                foodItem.getOptionType()));
                                         myAdapter.notifyItemInserted(models.size() - 1);
                                     } else {
                                         Option_2_vote_count = "0";
+                                        Option_3_vote_count = "0";
+                                        Option_4_vote_count = "0";
                                     }
                                 }
 
@@ -142,6 +158,93 @@ public class VoteResult extends AppCompatActivity {
                             });
 
 
+                            firebaseDatabase.getReference().child("vote_count").child(foodItem.getQuestionKey()).child(foodItem.getOption3().getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot_three) {
+                                    if (dataSnapshot_three != null && dataSnapshot_three.exists()) {
+                                        Option_3_vote_count = dataSnapshot_three.getValue().toString();
+                                        int total_count = Integer.parseInt(Option_1_vote_count) + Integer.parseInt(Option_2_vote_count) + Integer.parseInt(Option_3_vote_count)+ Integer.parseInt(Option_4_vote_count);
+                                        int first = ((Integer.parseInt(Option_1_vote_count)) * 100) / total_count;
+                                        int second = ((Integer.parseInt(Option_2_vote_count)) * 100) / total_count;
+                                        int third = ((Integer.parseInt(Option_3_vote_count)) * 100) / total_count;
+                                        int forth = ((Integer.parseInt(Option_4_vote_count)) * 100) / total_count;
+
+                                        try {
+                                            totalParticipate.setText("Total Participate " + total_count);
+                                        } catch (Exception e) {
+                                        }
+
+
+                                        models.add(new QuestionAndVoteCount(foodItem.getQuestion(),
+                                                foodItem.getQuestionKey(),
+                                                foodItem.getOption1().getValue(),
+                                                String.valueOf(Option_1_vote_count),
+                                                foodItem.getOption2().getValue(),
+                                                String.valueOf(Option_2_vote_count),
+                                                foodItem.getOption3().getValue(),
+                                                String.valueOf(Option_3_vote_count),
+                                                foodItem.getOption4().getValue(),
+                                                String.valueOf(Option_4_vote_count),
+                                                first, second,third,forth,
+                                                foodItem.getOptionType()));
+                                        myAdapter.notifyItemInserted(models.size() - 1);
+                                    } else {
+                                        Option_2_vote_count = "0";
+                                        Option_3_vote_count = "0";
+                                        Option_4_vote_count = "0";
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+                            firebaseDatabase.getReference().child("vote_count").child(foodItem.getQuestionKey()).child(foodItem.getOption4().getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot_two) {
+                                    if (dataSnapshot_two != null && dataSnapshot_two.exists()) {
+                                        Option_4_vote_count = dataSnapshot_two.getValue().toString();
+                                        int total_count = Integer.parseInt(Option_1_vote_count) + Integer.parseInt(Option_2_vote_count)+ Integer.parseInt(Option_3_vote_count)+ Integer.parseInt(Option_4_vote_count);
+
+                                        int first = ((Integer.parseInt(Option_1_vote_count)) * 100) / total_count;
+                                        int second = ((Integer.parseInt(Option_2_vote_count)) * 100) / total_count;
+                                        int third = ((Integer.parseInt(Option_3_vote_count)) * 100) / total_count;
+                                        int forth = ((Integer.parseInt(Option_4_vote_count)) * 100) / total_count;
+
+                                        try {
+                                            totalParticipate.setText("Total Participate " + total_count);
+                                        } catch (Exception e) {
+                                        }
+
+
+                                        models.add(new QuestionAndVoteCount(foodItem.getQuestion(),
+                                                foodItem.getQuestionKey(),
+                                                foodItem.getOption1().getValue(),
+                                                String.valueOf(Option_1_vote_count),
+                                                foodItem.getOption2().getValue(),
+                                                String.valueOf(Option_2_vote_count),
+                                                foodItem.getOption3().getValue(),
+                                                String.valueOf(Option_3_vote_count),
+                                                foodItem.getOption4().getValue(),
+                                                String.valueOf(Option_4_vote_count),
+                                                first, second,third,forth,
+                                                foodItem.getOptionType()));
+                                        myAdapter.notifyItemInserted(models.size() - 1);
+                                    } else {
+                                        Option_2_vote_count = "0";
+                                        Option_3_vote_count = "0";
+                                        Option_4_vote_count = "0";
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                         }
 
                     }

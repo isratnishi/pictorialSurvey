@@ -6,34 +6,67 @@ public class VotingModel {
     String selectedOptionID;
     String OptionOne;
     String OptionTwo;
+    String OptionThree;
+    String OptionFour;
     String QuestuionID;
     String QuestuionValue;
     String OptionType;
     String optionOneID;
     String optionTwoID;
-    String nonSelectedID;
+    String optionThreeID;
+    String optionFourID;
+    String nonSelectedID1;
 
-    public VotingModel(String serVay_ID, String selectedOptionValue, String selectedOptionID, String optionOne, String optionTwo, String questuionID, String questuionValue, String optionType, String optionOneID, String optionTwoID, String nonSelectedID) {
+    public VotingModel(String serVay_ID, String selectedOptionValue, String selectedOptionID, String optionOne, String optionTwo, String optionThree, String optionFour, String questuionID, String questuionValue, String optionType, String optionOneID, String optionTwoID, String optionThreeID, String optionFourID, String nonSelectedID1, String nonSelectedID2, String nonSelectedID3) {
         this.serVay_ID = serVay_ID;
         this.selectedOptionValue = selectedOptionValue;
         this.selectedOptionID = selectedOptionID;
         OptionOne = optionOne;
         OptionTwo = optionTwo;
+        OptionThree = optionThree;
+        OptionFour = optionFour;
         QuestuionID = questuionID;
         QuestuionValue = questuionValue;
         OptionType = optionType;
         this.optionOneID = optionOneID;
         this.optionTwoID = optionTwoID;
-        this.nonSelectedID = nonSelectedID;
+        this.optionThreeID = optionThreeID;
+        this.optionFourID = optionFourID;
+        this.nonSelectedID1 = nonSelectedID1;
+        this.nonSelectedID2 = nonSelectedID2;
+        this.nonSelectedID3 = nonSelectedID3;
     }
 
-    public String getNonSelectedID() {
-        return nonSelectedID;
+    public String getNonSelectedID1() {
+        return nonSelectedID1;
     }
 
-    public void setNonSelectedID(String nonSelectedID) {
-        this.nonSelectedID = nonSelectedID;
+    public void setNonSelectedID1(String nonSelectedID1) {
+        this.nonSelectedID1 = nonSelectedID1;
     }
+
+    public String getNonSelectedID2() {
+        return nonSelectedID2;
+    }
+
+    public void setNonSelectedID2(String nonSelectedID2) {
+        this.nonSelectedID2 = nonSelectedID2;
+    }
+
+    public String getNonSelectedID3() {
+        return nonSelectedID3;
+    }
+
+    public void setNonSelectedID3(String nonSelectedID3) {
+        this.nonSelectedID3 = nonSelectedID3;
+    }
+
+    String nonSelectedID2;
+    String nonSelectedID3;
+
+
+
+
 
     public String getOptionOneID() {
         return optionOneID;
@@ -73,6 +106,38 @@ public class VotingModel {
 
     public void setSelectedOptionID(String selectedOptionID) {
         this.selectedOptionID = selectedOptionID;
+    }
+
+    public String getOptionThree() {
+        return OptionThree;
+    }
+
+    public void setOptionThree(String optionThree) {
+        OptionThree = optionThree;
+    }
+
+    public String getOptionFour() {
+        return OptionFour;
+    }
+
+    public void setOptionFour(String optionFour) {
+        OptionFour = optionFour;
+    }
+
+    public String getOptionThreeID() {
+        return optionThreeID;
+    }
+
+    public void setOptionThreeID(String optionThreeID) {
+        this.optionThreeID = optionThreeID;
+    }
+
+    public String getOptionFourID() {
+        return optionFourID;
+    }
+
+    public void setOptionFourID(String optionFourID) {
+        this.optionFourID = optionFourID;
     }
 
     public String getOptionOne() {

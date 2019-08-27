@@ -64,20 +64,7 @@ public class SurveyUserActivity extends AppCompatActivity {
         btnVote = findViewById(R.id.btnVote);
         btnAddQuestion.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.Recyclerview);
-    /*    Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            survey = (Survey) getIntent().getSerializableExtra(Constant.EXTRA_ITEM);
-        }
-        try {
-            if (survey != null) {
-                tvName.setText(survey.getSurveyName());
-            }
-            if (survey != null) {
-                tvDescription.setText(survey.getDescription());
-            }
-        } catch (Exception e) {
-        }
-        */
+
         tvName.setText(CURRENTLY_SHOWING_SURVEY.getSurveyName());
         tvDescription.setText(CURRENTLY_SHOWING_SURVEY.getDescription());
         try {
@@ -118,14 +105,12 @@ public class SurveyUserActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot != null && dataSnapshot.exists()) {
-                                   // Toast.makeText(SurveyUserActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(SurveyUserActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
                                     int oldCount = Integer.parseInt(dataSnapshot.getValue().toString());
                                     oldCount++;
                                     firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getSelectedOptionID()).setValue(oldCount).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            //Toast.makeText(SurveyUserActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
-                                            // onBackPressed();
                                         }
                                     });
                                     Intent intent = new Intent(SurveyUserActivity.this, UserMainActivity.class);
@@ -151,48 +136,99 @@ public class SurveyUserActivity extends AppCompatActivity {
                             }
                         });
 
-                        //  firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getSelectedOptionID()).setValue("1");
-
-
                     }
                 });
 
-                firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot != null && dataSnapshot.exists()) {
-                            Toast.makeText(SurveyUserActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
-                            int oldCount = Integer.parseInt(dataSnapshot.getValue().toString());
-                                   /* oldCount++;
-                                    firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getSelectedOptionID()).setValue(oldCount).addOnSuccessListener(new OnSuccessListener<Void>() {
+                firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI)
+                        .getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID1())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot != null && dataSnapshot.exists()) {
+                                    Toast.makeText(SurveyUserActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
+                                    int oldCount = Integer.parseInt(dataSnapshot.getValue().toString());
+
+                                    Toast.makeText(SurveyUserActivity.this, "Survey Submited ", Toast.LENGTH_SHORT).show();
+                                    onBackPressed();
+
+                                } else {
+                                    Toast.makeText(SurveyUserActivity.this, "Null", Toast.LENGTH_SHORT).show();
+                                    firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID1()).setValue(0).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(SurveyUserActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(SurveyUserActivity.this, "Survey Submited ", Toast.LENGTH_SHORT).show();
                                             onBackPressed();
                                         }
                                     });
-                                    */
-                            Toast.makeText(SurveyUserActivity.this, "Survey Submited ", Toast.LENGTH_SHORT).show();
-                            onBackPressed();
 
-                        } else {
-                            Toast.makeText(SurveyUserActivity.this, "Null", Toast.LENGTH_SHORT).show();
-                            firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID()).setValue(0).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI)
+                        .getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID2())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot != null && dataSnapshot.exists()) {
+                                    Toast.makeText(SurveyUserActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
+                                    int oldCount = Integer.parseInt(dataSnapshot.getValue().toString());
+
                                     Toast.makeText(SurveyUserActivity.this, "Survey Submited ", Toast.LENGTH_SHORT).show();
                                     onBackPressed();
+
+                                } else {
+                                    Toast.makeText(SurveyUserActivity.this, "Null", Toast.LENGTH_SHORT).show();
+                                    firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID1()).setValue(0).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(SurveyUserActivity.this, "Survey Submited ", Toast.LENGTH_SHORT).show();
+                                            onBackPressed();
+                                        }
+                                    });
+
                                 }
-                            });
+                            }
 
-                        }
-                    }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
+                firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI)
+                        .getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID3())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot != null && dataSnapshot.exists()) {
+                                    Toast.makeText(SurveyUserActivity.this, dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
+                                    int oldCount = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                    }
-                });
+                                    Toast.makeText(SurveyUserActivity.this, "Survey Submited ", Toast.LENGTH_SHORT).show();
+                                    onBackPressed();
+
+                                } else {
+                                    Toast.makeText(SurveyUserActivity.this, "Null", Toast.LENGTH_SHORT).show();
+                                    firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getQuestuionID()).child(votingModels.get(finalI).getNonSelectedID3()).setValue(0).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(SurveyUserActivity.this, "Survey Submited ", Toast.LENGTH_SHORT).show();
+                                            onBackPressed();
+                                        }
+                                    });
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
 
                 //  firebaseDatabase.getReference().child("vote_count").child(votingModels.get(finalI).getSelectedOptionID()).setValue("1");
 
@@ -290,9 +326,21 @@ public class SurveyUserActivity extends AppCompatActivity {
                 }
                 if (models.size() > 0) {
                     for (int i = 0; i < models.size(); i++) {
-                        votingModels.add(new VotingModel("Empty", models.get(i).getOption1().getValue(),
-                                models.get(i).getOption1().getKey(), models.get(i).getOption1().getValue(),
-                                models.get(i).getOption2().getValue(), models.get(i).getQuestionKey(), models.get(i).getQuestion(), models.get(i).getOptionType(), models.get(i).getOption1().getKey(), models.get(i).getOption2().getKey(), models.get(i).getOption2().getKey()));
+                        votingModels.add(new VotingModel("Empty",
+                                models.get(i).getOption1().getValue(),
+                                models.get(i).getOption1().getKey(),
+                                models.get(i).getOption1().getValue(),
+                                models.get(i).getOption2().getValue(), models.get(i).getOption3().getValue(),
+                                models.get(i).getOption4().getValue(),
+                                models.get(i).getQuestionKey(),
+                                models.get(i).getQuestion(),
+                                models.get(i).getOptionType(),
+                                models.get(i).getOption1().getKey(),
+                                models.get(i).getOption2().getKey(),
+                                models.get(i).getOption3().getKey(),
+                                models.get(i).getOption4().getKey(),models.get(i).getOption2().getKey(),
+                                models.get(i).getOption3().getKey(),
+                                models.get(i).getOption4().getKey()));
                     }
 
                     viewItemsAdapter.notifyDataSetChanged();

@@ -47,44 +47,40 @@ public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItem
             holder.imageanswer1.setVisibility(View.VISIBLE);
             holder.imageanswer2.setVisibility(View.VISIBLE);
             //show image on glide
-            Glide.with(context).load(question.getOption1().getValue()).into( holder.imageanswer1);
-            Glide.with(context).load(question.getOption2().getValue()).into( holder.imageanswer2);
+            Glide.with(context).load(question.getOption1().getValue()).into(holder.imageanswer1);
+            Glide.with(context).load(question.getOption2().getValue()).into(holder.imageanswer2);
             holder.answer2.setVisibility(View.GONE);
             holder.answer1.setVisibility(View.GONE);
+            holder.answer3.setVisibility(View.GONE);
+            holder.answer4.setVisibility(View.GONE);
 
         } else {
             holder.imageanswer1.setVisibility(View.GONE);
             holder.imageanswer2.setVisibility(View.GONE);
-            holder.answer2.setVisibility(View.VISIBLE);
-            holder.answer1.setVisibility(View.VISIBLE);
+            if (question.getOption1().getValue().equals("")||question.getOption1().getValue()==null) {
+                holder.answer1.setVisibility(View.GONE);
+            } if (question.getOption2().getValue().equals("")||question.getOption2().getValue()==null) {
+                holder.answer2.setVisibility(View.GONE);
+            }  if (question.getOption3().getValue().equals("")||question.getOption3().getValue()==null) {
+                holder.answer3.setVisibility(View.GONE);
+            } if (question.getOption4().getValue().equals("")||question.getOption4().getValue()==null) {
+                holder.answer4.setVisibility(View.GONE);
+            } /*else {
+                holder.answer2.setVisibility(View.VISIBLE);
+                holder.answer1.setVisibility(View.VISIBLE);
+                holder.answer3.setVisibility(View.VISIBLE);
+                holder.answer4.setVisibility(View.VISIBLE);
+            }*/
         }
 
 
-
-        holder.answer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                a3++;
-                holder.Counter1.setText(String.valueOf(a3));
-            }
-        });
-
-
-
-        holder.answer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                a4++;
-                holder.Counter2.setText(String.valueOf(a4));
-            }
-        });
-        Log.d("tag", " key " + itemList.get(position));
-
-  //  holder.question.setText(question.getQuestion());
+        //  holder.question.setText(question.getQuestion());
 
         holder.answer2.setText(itemList.get(position).getOption2().getValue());
         holder.answer1.setText(itemList.get(position).getOption1().getValue());
-        holder.question.setText("Q. "+itemList.get(position).getQuestion());
+        holder.answer3.setText(itemList.get(position).getOption3().getValue());
+        holder.answer4.setText(itemList.get(position).getOption4().getValue());
+        holder.question.setText("Q. " + itemList.get(position).getQuestion());
 
     }
 
@@ -96,7 +92,7 @@ public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItem
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView question;
         TextView Counter1, Counter2;
-        RadioButton answer1, answer2;
+        RadioButton answer1, answer2, answer3, answer4;
         ImageView imageanswer1, imageanswer2;
         CardView rootLayout;
         LinearLayout llradioAnswer, llImageAnswer;
@@ -106,6 +102,8 @@ public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItem
             question = view.findViewById(R.id.teamone);
             answer1 = view.findViewById(R.id.answer1);
             answer2 = view.findViewById(R.id.answer2);
+            answer3 = view.findViewById(R.id.answer3);
+            answer4 = view.findViewById(R.id.answer4);
             imageanswer1 = view.findViewById(R.id.imageanswer1);
             imageanswer2 = view.findViewById(R.id.imageanswer2);
             rootLayout = view.findViewById(R.id.rootLayout);

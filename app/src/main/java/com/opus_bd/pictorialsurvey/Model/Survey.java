@@ -3,10 +3,19 @@ package com.opus_bd.pictorialsurvey.Model;
 import java.io.Serializable;
 
 public class Survey implements Serializable {
+    private String surveyCondition;
     private String surveyName;
     private String description;
     private Question question;
     private String  key;
+
+    public String getSurveyCondition() {
+        return surveyCondition;
+    }
+
+    public void setSurveyCondition(String surveyCondition) {
+        this.surveyCondition = surveyCondition;
+    }
 
     public String getKey() {
         return key;

@@ -79,6 +79,20 @@
             android:drawablePadding="8dp"
             android:hint="Answer2" />
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSetQuestionAnswer3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:hint="Answer3" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSetQuestionAnswer4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:hint="Answer4" />
+
         <Button
             android:id="@+id/btnText"
             android:layout_width="wrap_content"

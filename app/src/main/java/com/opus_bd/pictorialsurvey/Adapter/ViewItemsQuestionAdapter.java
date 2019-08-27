@@ -55,8 +55,8 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
             holder.imageanswer1.setVisibility(View.VISIBLE);
             holder.imageanswer2.setVisibility(View.VISIBLE);
             //show image on glide
-            Glide.with(context).load(question.getOptionOne()).into( holder.imageanswer1);
-            Glide.with(context).load(question.getOptionTwo()).into( holder.imageanswer2);
+            Glide.with(context).load(question.getOptionOne()).into(holder.imageanswer1);
+            Glide.with(context).load(question.getOptionTwo()).into(holder.imageanswer2);
             holder.answer2.setVisibility(View.VISIBLE);
             holder.answer1.setVisibility(View.VISIBLE);
             holder.answer2.setText("Picture 2");
@@ -65,12 +65,25 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
         } else {
             holder.imageanswer1.setVisibility(View.GONE);
             holder.imageanswer2.setVisibility(View.GONE);
-            holder.answer2.setVisibility(View.VISIBLE);
-            holder.answer1.setVisibility(View.VISIBLE);
+            if (question.getOptionOne().equals("") || question.getOptionOne() == null) {
+                holder.answer1.setVisibility(View.GONE);
+            }
+            if (question.getOptionTwo().equals("") || question.getOptionTwo() == null) {
+                holder.answer2.setVisibility(View.GONE);
+            }
+            if (question.getOptionThree().equals("") || question.getOptionThree() == null) {
+                holder.answer3.setVisibility(View.GONE);
+            }
+            if (question.getOptionFour().equals("") || question.getOptionFour() == null) {
+                holder.answer4.setVisibility(View.GONE);
+            }
+         /*   holder.answer2.setVisibility(View.VISIBLE);
+            holder.answer1.setVisibility(View.VISIBLE);*/
             holder.answer2.setText(votingModels.get(position).getOptionTwo());
             holder.answer1.setText(votingModels.get(position).getOptionOne());
+            holder.answer3.setText(votingModels.get(position).getOptionThree());
+            holder.answer4.setText(votingModels.get(position).getOptionFour());
         }
-
 
 
         holder.radioQuestionGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -80,12 +93,32 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
                 switch (radioGroup.getCheckedRadioButtonId()) {
                     case R.id.answer1: {
                         question.setSelectedOptionID(question.getOptionOneID());
-                        question.setNonSelectedID(question.getOptionTwoID());
+                        question.setNonSelectedID1(question.getOptionTwoID());
+                        question.setNonSelectedID2(question.getOptionThreeID());
+                        question.setNonSelectedID3(question.getOptionFourID());
                         break;
                     }
                     case R.id.answer2: {
                         question.setSelectedOptionID(question.getOptionTwoID());
-                        question.setNonSelectedID(question.getOptionOneID());
+                        question.setNonSelectedID1(question.getOptionOneID());
+                        question.setNonSelectedID2(question.getOptionThreeID());
+                        question.setNonSelectedID3(question.getOptionFourID());
+
+                        break;
+                    }
+                    case R.id.answer3: {
+                        question.setSelectedOptionID(question.getOptionThreeID());
+                        question.setNonSelectedID1(question.getOptionOneID());
+                        question.setNonSelectedID2(question.getOptionTwoID());
+                        question.setNonSelectedID3(question.getOptionFourID());
+
+                        break;
+                    }
+                    case R.id.answer4: {
+                        question.setSelectedOptionID(question.getOptionFourID());
+                        question.setNonSelectedID2(question.getOptionTwoID());
+                        question.setNonSelectedID3(question.getOptionThreeID());
+                        question.setNonSelectedID1(question.getOptionOneID());
 
                         break;
                     }
@@ -95,11 +128,10 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
         });
 
 
+        // holder.question.setText(question.getQuestuionValue());
 
-       // holder.question.setText(question.getQuestuionValue());
 
-
-        holder.question.setText("Q. "+votingModels.get(position).getQuestuionValue());
+        holder.question.setText("Q. " + votingModels.get(position).getQuestuionValue());
 
     }
 
@@ -112,6 +144,7 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
         TextView question;
         TextView Counter1, Counter2;
         RadioButton answer1, answer2;
+        RadioButton answer3, answer4;
         RadioGroup radioQuestionGroup;
         ImageView imageanswer1, imageanswer2;
         CardView rootLayout;
@@ -123,6 +156,8 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
             question = view.findViewById(R.id.teamone);
             answer1 = view.findViewById(R.id.answer1);
             answer2 = view.findViewById(R.id.answer2);
+            answer3 = view.findViewById(R.id.answer3);
+            answer4 = view.findViewById(R.id.answer4);
             imageanswer1 = view.findViewById(R.id.imageanswer1);
             radioQuestionGroup = view.findViewById(R.id.radioQuestionGroup);
             imageanswer2 = view.findViewById(R.id.imageanswer2);

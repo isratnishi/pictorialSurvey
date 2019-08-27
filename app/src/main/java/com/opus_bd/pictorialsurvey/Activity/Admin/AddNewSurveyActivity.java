@@ -48,6 +48,7 @@ public class AddNewSurveyActivity extends AppCompatActivity {
         Survey survey = new Survey();
         survey.setSurveyName(etSurveyName.getText().toString());
         survey.setDescription(etSurveyDescription.getText().toString());
+        survey.setSurveyCondition("Open");
         survey.setKey(key);
         databaseReference.child(key).setValue(survey);
 

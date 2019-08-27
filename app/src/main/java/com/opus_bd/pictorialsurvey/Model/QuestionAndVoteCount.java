@@ -7,19 +7,31 @@ public class QuestionAndVoteCount {
     String optionOneCount;
     String optionTwoValue;
     String optionTwoCount;
+    String optionThreeValue;
+    String optionThreeCount;
+    String optionFourValue;
+    String optionFourCount;
     int firstoption;
     int secondoption;
+    int thirdoption;
+    int forthoption;
     String type;
 
-    public QuestionAndVoteCount(String questionBody, String optionID, String optionOneValue, String optionOneCount, String optionTwoValue, String optionTwoCount, int firstoption, int secondoption, String type) {
+    public QuestionAndVoteCount(String questionBody, String optionID, String optionOneValue, String optionOneCount, String optionTwoValue, String optionTwoCount, String optionThreeValue, String optionThreeCount, String optionFourValue, String optionFourCount, int firstoption, int secondoption, int thirdoption, int forthoption, String type) {
         QuestionBody = questionBody;
         OptionID = optionID;
         this.optionOneValue = optionOneValue;
         this.optionOneCount = optionOneCount;
         this.optionTwoValue = optionTwoValue;
         this.optionTwoCount = optionTwoCount;
+        this.optionThreeValue = optionThreeValue;
+        this.optionThreeCount = optionThreeCount;
+        this.optionFourValue = optionFourValue;
+        this.optionFourCount = optionFourCount;
         this.firstoption = firstoption;
         this.secondoption = secondoption;
+        this.thirdoption = thirdoption;
+        this.forthoption = forthoption;
         this.type = type;
     }
 
@@ -53,6 +65,54 @@ public class QuestionAndVoteCount {
 
     public void setOptionOneValue(String optionOneValue) {
         this.optionOneValue = optionOneValue;
+    }
+
+    public String getOptionThreeValue() {
+        return optionThreeValue;
+    }
+
+    public void setOptionThreeValue(String optionThreeValue) {
+        this.optionThreeValue = optionThreeValue;
+    }
+
+    public String getOptionThreeCount() {
+        return optionThreeCount;
+    }
+
+    public void setOptionThreeCount(String optionThreeCount) {
+        this.optionThreeCount = optionThreeCount;
+    }
+
+    public String getOptionFourValue() {
+        return optionFourValue;
+    }
+
+    public void setOptionFourValue(String optionFourValue) {
+        this.optionFourValue = optionFourValue;
+    }
+
+    public String getOptionFourCount() {
+        return optionFourCount;
+    }
+
+    public void setOptionFourCount(String optionFourCount) {
+        this.optionFourCount = optionFourCount;
+    }
+
+    public int getThirdoption() {
+        return thirdoption;
+    }
+
+    public void setThirdoption(int thirdoption) {
+        this.thirdoption = thirdoption;
+    }
+
+    public int getForthoption() {
+        return forthoption;
+    }
+
+    public void setForthoption(int forthoption) {
+        this.forthoption = forthoption;
     }
 
     public String getOptionOneCount() {
