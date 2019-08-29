@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:text="Transition Type" />
+            android:text="Question Type" />
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spnGender"

@@ -57,7 +57,11 @@ public class UserMainActivity extends AppCompatActivity {
                 for (DataSnapshot tempDataSnapShot : dataSnapshot.getChildren()) {
                     Survey foodItem = tempDataSnapShot.getValue(Survey.class);
                     if (foodItem != null) {
-                        models.add(foodItem);
+                        if(foodItem.getSurveyCondition().equals("Open"))
+                        {
+                            models.add(foodItem);
+                        }
+
 
                     }
                 }

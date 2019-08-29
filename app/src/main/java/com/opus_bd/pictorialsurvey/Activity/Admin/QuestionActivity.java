@@ -300,6 +300,10 @@ public class QuestionActivity extends AppCompatActivity {
 
                                                             String option_2_key = databaseReference.child(key).push().getKey();
                                                             servayQuestionModel.setOption2(new Option2(option_2_key, SECOND_UPLOADED_IMAGE_LINK));
+                                                            String option_3_key = databaseReference.child(key).push().getKey();
+                                                            servayQuestionModel.setOption3(new Option3(option_3_key, ""));
+                                                            String option_4_key = databaseReference.child(key).push().getKey();
+                                                            servayQuestionModel.setOption4(new Option4(option_4_key, ""));
                                                             servayQuestionModel.setOptionType("PHOTO");
                                                             databaseReference.child(key).setValue(servayQuestionModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override

@@ -331,7 +331,8 @@ public class SurveyUserActivity extends AppCompatActivity {
                                 models.get(i).getOption1().getValue(),
                                 models.get(i).getOption1().getKey(),
                                 models.get(i).getOption1().getValue(),
-                                models.get(i).getOption2().getValue(), models.get(i).getOption3().getValue(),
+                                models.get(i).getOption2().getValue(),
+                                models.get(i).getOption3().getValue(),
                                 models.get(i).getOption4().getValue(),
                                 models.get(i).getQuestionKey(),
                                 models.get(i).getQuestion(),
@@ -339,7 +340,8 @@ public class SurveyUserActivity extends AppCompatActivity {
                                 models.get(i).getOption1().getKey(),
                                 models.get(i).getOption2().getKey(),
                                 models.get(i).getOption3().getKey(),
-                                models.get(i).getOption4().getKey(),models.get(i).getOption2().getKey(),
+                                models.get(i).getOption4().getKey(),
+                                models.get(i).getOption2().getKey(),
                                 models.get(i).getOption3().getKey(),
                                 models.get(i).getOption4().getKey()));
                     }

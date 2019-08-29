@@ -61,6 +61,8 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
             holder.answer1.setVisibility(View.VISIBLE);
             holder.answer2.setText("Picture 2");
             holder.answer1.setText("Picture 1");
+            holder.answer3.setVisibility(View.GONE);
+            holder.answer4.setVisibility(View.GONE);
 
         } else {
             holder.imageanswer1.setVisibility(View.GONE);
