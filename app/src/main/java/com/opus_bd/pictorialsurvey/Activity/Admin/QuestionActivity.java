@@ -390,9 +390,7 @@ public class QuestionActivity extends AppCompatActivity {
             btnAdd.setText("Add");
             count=0;
             dec=0;
-
         }
-
     }
 
     public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
