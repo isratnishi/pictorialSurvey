@@ -84,6 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"
+            android:visibility="gone"
             android:hint="Answer3" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -91,7 +92,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"
+            android:visibility="gone"
             android:hint="Answer4" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="20dp"
+            android:onClick="btnAdd"
+            android:text="Add" />
 
         <Button
             android:id="@+id/btnText"

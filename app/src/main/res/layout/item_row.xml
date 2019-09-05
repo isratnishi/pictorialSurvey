@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:layout_marginBottom="1dp"
+    android:padding="10dp"
     app:cardCornerRadius="5dp"
-    android:id="@+id/rootLayout"
     app:cardElevation="10dp">
 
     <LinearLayout
@@ -21,9 +21,9 @@
             android:layout_gravity="start"
             android:layout_margin="10dp"
             android:text="teamone"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
             android:textColor="@android:color/black"
             android:textSize="20sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
 
             />
 
@@ -35,7 +35,18 @@
             android:layout_margin="10dp"
             android:text="teamTwo"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="15sp"/>
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvSurveyPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            android:text="Survey Password"
+            android:textColor="@color/infoColor"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textSize="15sp" />
 
 
     </LinearLayout>

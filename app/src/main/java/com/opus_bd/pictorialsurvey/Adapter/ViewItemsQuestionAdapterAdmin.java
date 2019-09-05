@@ -1,7 +1,6 @@
 package com.opus_bd.pictorialsurvey.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.opus_bd.pictorialsurvey.Model.ServayQuestionModel;
-import com.opus_bd.pictorialsurvey.Model.VotingModel;
 import com.opus_bd.pictorialsurvey.R;
 
 import java.util.List;
@@ -24,7 +22,6 @@ import java.util.List;
 public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItemsQuestionAdapterAdmin.ItemViewHolder> {
     private List<ServayQuestionModel> itemList;
     private Context context;
-    private int a1 = 0, a2 = 0, a3 = 0, a4 = 0;
 
     public ViewItemsQuestionAdapterAdmin(List<ServayQuestionModel> itemList, Context context) {
         this.itemList = itemList;
@@ -65,17 +62,8 @@ public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItem
                 holder.answer3.setVisibility(View.GONE);
             } if (question.getOption4().getValue().equals("")||question.getOption4().getValue()==null) {
                 holder.answer4.setVisibility(View.GONE);
-            } /*else {
-                holder.answer2.setVisibility(View.VISIBLE);
-                holder.answer1.setVisibility(View.VISIBLE);
-                holder.answer3.setVisibility(View.VISIBLE);
-                holder.answer4.setVisibility(View.VISIBLE);
-            }*/
+            }
         }
-
-
-        //  holder.question.setText(question.getQuestion());
-
         holder.answer2.setText(itemList.get(position).getOption2().getValue());
         holder.answer1.setText(itemList.get(position).getOption1().getValue());
         holder.answer3.setText(itemList.get(position).getOption3().getValue());
@@ -91,7 +79,6 @@ public class ViewItemsQuestionAdapterAdmin extends RecyclerView.Adapter<ViewItem
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView question;
-        TextView Counter1, Counter2;
         RadioButton answer1, answer2, answer3, answer4;
         ImageView imageanswer1, imageanswer2;
         CardView rootLayout;

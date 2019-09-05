@@ -35,7 +35,6 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_questionBody, tv_option_1, tv_option_1_vote, tv_option_2, tv_option_2_vote, tv_option_3, tv_option_3_vote, tv_option_4, tv_option_4_vote;
-        RelativeLayout relative_container;
         ProgressBar first, second;
         ImageView image_one, image_two;
         PieChart pieChart;
@@ -43,7 +42,6 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
         PieData pieData;
         PieDataSet pieDataSet;
         ArrayList pieEntries;
-        ArrayList PieEntryLabels;
 
         RelativeLayout rvpic;
 
@@ -73,9 +71,6 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
     }
 
 
-    /*private void getEntries() {
-
-    }*/
     public QuestionsLitsAdapter(List<QuestionAndVoteCount> lists) {
         this.list = lists;
 
@@ -89,9 +84,9 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
         return new MyViewHolder(itemView);
     }
 
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-        final QuestionAndVoteCount movie = list.get(position);
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, final int position) {
+            final QuestionAndVoteCount movie = list.get(position);
         context = holder.tv_questionBody.getContext();
         holder.tv_questionBody.setText("Q. " + movie.getQuestionBody());
         holder.tv_option_1.setText(movie.getOptionOneValue());
@@ -156,8 +151,7 @@ public class QuestionsLitsAdapter extends RecyclerView.Adapter<QuestionsLitsAdap
         holder.pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         holder.pieDataSet.setSliceSpace(1f);
         holder.pieDataSet.setValueTextColor(Color.WHITE);
-        //holder.pieDataSet.setValueTextSize(10f);
-        // holder.pieDataSet.setSliceSpace(1f);
+
 
     }
 

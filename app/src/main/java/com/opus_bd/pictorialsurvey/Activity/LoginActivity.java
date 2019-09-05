@@ -18,7 +18,7 @@ import com.opus_bd.pictorialsurvey.R;
 
 public class LoginActivity extends AppCompatActivity {
 Button buttonUser,buttonAdmin;
-ImageView image;
+//ImageView image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +26,9 @@ ImageView image;
 
         buttonAdmin=findViewById(R.id.buttonAdmin);
         buttonUser=findViewById(R.id.buttonUser);
-        image=findViewById(R.id.image);
+       /* image=findViewById(R.id.image);
 
-        Glide.with(this).load(R.drawable.common_full_open_on_phone).into(image);
+        Glide.with(this).load(R.drawable.common_full_open_on_phone).into(image);*/
 
 
         buttonAdmin.setOnClickListener(new View.OnClickListener() {

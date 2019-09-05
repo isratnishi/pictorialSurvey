@@ -9,6 +9,7 @@ public class Constant {
     public static final String SETQUESTION = "setquestion";
     public static final String SETSURVEY = "setSurvey";
     public static final String SETSURVEYDESCRIPTION = "setSurveyDescription";
+    public static final String SETSURVEYPASSWORD = "setSurveyPassword";
     public static final String ANSWER1 = "answer1";
     public static final String ANSWER2 = "answer2";
     public static final String IMAGE_ANSWER1 = "imageanswer1";

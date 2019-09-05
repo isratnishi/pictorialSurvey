@@ -20,6 +20,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -71,6 +72,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.opus_bd.pictorialsurvey.Data.shared_data.CURRENTLY_SHOWING_SURVEY_ID;
 
@@ -78,12 +80,14 @@ public class QuestionActivity extends AppCompatActivity {
 
     private static final String IMAGE_DIRECTORY = "/demonuts";
     private int GALLERY = 1, CAMERA = 2;
+    Button btnAdd;
     private static final int PICK_IMG = 1;
     private ArrayList<Uri> ImageList = new ArrayList<Uri>();
     private int uploads = 0;
     Survey survey;
     int count = 0;
     //Firebase
+    int dec=0;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReference();
     TextInputEditText etSetQuestion;
@@ -211,6 +215,7 @@ public class QuestionActivity extends AppCompatActivity {
         llTextAnswer = findViewById(R.id.llTextAnswer);
         llPictureAnswer = findViewById(R.id.llPictureAnswer);
         spnGender = findViewById(R.id.spnGender);
+        btnAdd = findViewById(R.id.btnAdd);
 
     }
 
@@ -361,17 +366,46 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
+    public void btnAdd(View view) {
+
+        count++;
+        dec++;
+        if (count == 1) {
+            etSetQuestionAnswer3.setVisibility(VISIBLE);
+
+        }
+        if (count == 2) {
+            etSetQuestionAnswer4.setVisibility(VISIBLE);
+            btnAdd.setText("Hide");
+
+
+        }
+        if (dec == 3) {
+            etSetQuestionAnswer4.setVisibility(GONE);
+            btnAdd.setText("Hide");
+            count--;
+        }
+        if (dec == 4) {
+            etSetQuestionAnswer3.setVisibility(GONE);
+            btnAdd.setText("Add");
+            count=0;
+            dec=0;
+
+        }
+
+    }
+
     public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             String item = parent.getItemAtPosition(pos).toString();
             if (item.equals("Text")) {
                 llTextAnswer.setVisibility(VISIBLE);
-                llPictureAnswer.setVisibility(View.GONE);
+                llPictureAnswer.setVisibility(GONE);
             }
             if (item.equals("Picture")) {
                 llPictureAnswer.setVisibility(VISIBLE);
-                llTextAnswer.setVisibility(View.GONE);
+                llTextAnswer.setVisibility(GONE);
             }
         }
 

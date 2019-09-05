@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddNewSurveyActivity extends AppCompatActivity {
-    EditText etSurveyName,etSurveyDescription;
+    EditText etSurveyName,etSurveyDescription,etSurveyPassword;
     Button btnSave;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,7 @@ public class AddNewSurveyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_survey);
         etSurveyName=findViewById(R.id.etSurveyName);
         etSurveyDescription=findViewById(R.id.etSurveyDescription);
+        etSurveyPassword=findViewById(R.id.etSurveyPassword);
         btnSave=findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,9 +46,11 @@ public class AddNewSurveyActivity extends AppCompatActivity {
         Map<String, String> firebaseDataMap = new HashMap<>();
         firebaseDataMap.put(Constant.SETSURVEY, etSurveyName.getText().toString());
         firebaseDataMap.put(Constant.SETSURVEYDESCRIPTION, etSurveyDescription.getText().toString());
+        firebaseDataMap.put(Constant.SETSURVEYPASSWORD, etSurveyPassword.getText().toString());
         Survey survey = new Survey();
         survey.setSurveyName(etSurveyName.getText().toString());
         survey.setDescription(etSurveyDescription.getText().toString());
+        survey.setPassword(etSurveyPassword.getText().toString());
         survey.setSurveyCondition("Open");
         survey.setKey(key);
         databaseReference.child(key).setValue(survey);

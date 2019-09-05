@@ -33,13 +33,9 @@ import static com.opus_bd.pictorialsurvey.Activity.User.SurveyUserActivity.votin
 
 public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQuestionAdapter.ItemViewHolder> {
     private Context context;
-    private int a1 = 0, a2 = 0, a3 = 0, a4 = 0;
-
     public ViewItemsQuestionAdapter(Context context) {
         this.context = context;
     }
-
-
     @NonNull
     @Override
     public ViewItemsQuestionAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,7 +43,6 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
                 .inflate(R.layout.item_question_row, parent, false);
         return new ViewItemsQuestionAdapter.ItemViewHolder(itemView);
     }
-
     @Override
     public void onBindViewHolder(@NonNull final ViewItemsQuestionAdapter.ItemViewHolder holder, final int position) {
         final VotingModel question = votingModels.get(position);
@@ -79,8 +74,6 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
             if (question.getOptionFour().equals("") || question.getOptionFour() == null) {
                 holder.answer4.setVisibility(View.GONE);
             }
-         /*   holder.answer2.setVisibility(View.VISIBLE);
-            holder.answer1.setVisibility(View.VISIBLE);*/
             holder.answer2.setText(votingModels.get(position).getOptionTwo());
             holder.answer1.setText(votingModels.get(position).getOptionOne());
             holder.answer3.setText(votingModels.get(position).getOptionThree());
@@ -129,10 +122,6 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
             }
         });
 
-
-        // holder.question.setText(question.getQuestuionValue());
-
-
         holder.question.setText("Q. " + votingModels.get(position).getQuestuionValue());
 
     }
@@ -144,7 +133,6 @@ public class ViewItemsQuestionAdapter extends RecyclerView.Adapter<ViewItemsQues
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView question;
-        TextView Counter1, Counter2;
         RadioButton answer1, answer2;
         RadioButton answer3, answer4;
         RadioGroup radioQuestionGroup;

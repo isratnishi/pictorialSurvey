@@ -6,6 +6,7 @@ public class Survey implements Serializable {
     private String surveyCondition;
     private String surveyName;
     private String description;
+    private String password;
     private Question question;
     private String  key;
 
@@ -50,5 +51,13 @@ public class Survey implements Serializable {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
